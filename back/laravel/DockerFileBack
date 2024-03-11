@@ -1,0 +1,35 @@
+# Use the official PHP 7.4 image
+FROM php:7.4-fpm
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copy composer.json and composer.lock
+COPY composer.json composer.lock ./
+
+# Install application dependencies
+RUN composer install --no-scripts --no-autoloader
+
+# Copy existing application directory contents
+COPY . .
+
+# Generate optimized autoload files
+RUN composer dump-autoload --optimize
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]
