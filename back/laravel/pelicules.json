@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "títol": "Inception",
+    "descripció": "Un lladre que entra en els somnis dels altres per robar secrets del seu subconscient.",
+    "director": "Christopher Nolan",
+    "any_estrena": 2010,
+    "enllaç_imatge": "https://i.pinimg.com/originals/a4/a3/d9/a4a3d901487cb61d972d534741f815f3.jpg"
+  },
+  {
+    "id": 2,
+    "títol": "The Shawshank Redemption",
+    "descripció": "Dos homes empresonats es vinculen al llarg d'una sèrie d'anys, trobant consol i eventual redempció a través d'actes de decència comuna.",
+    "director": "Frank Darabont",
+    "any_estrena": 1994,
+    "enllaç_imatge": "https://m.media-amazon.com/images/I/71VNhykMgNL._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "id": 3,
+    "títol": "The Godfather",
+    "descripció": "El patriarca envellit d'una dinastia del crim organitzat transmet el control del seu imperi clandestí al seu fill reticent.",
+    "director": "Francis Ford Coppola",
+    "any_estrena": 1972,
+    "enllaç_imatge": "https://i.pinimg.com/736x/24/5a/44/245a44e4d9da3687f77e6202bd6d2995.jpg"
+  }
+]
