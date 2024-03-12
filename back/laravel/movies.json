@@ -1,0 +1,12 @@
+[
+    {
+        "name": "The Matrix",
+        "price": 10.99,
+        "image_url": "https://example.com/matrix.jpg"
+    },
+    {
+        "name": "Inception",
+        "price": 12.99,
+        "image_url": "https://example.com/inception.jpg"
+    }
+]
