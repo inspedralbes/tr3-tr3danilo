@@ -27,17 +27,24 @@ export default {
     };
   },
   mounted() {
-    try {
-    const peliculesDataInput = document.getElementById('peliculesData');
-    if (!peliculesDataInput) {
-      throw new Error('Hidden input with ID "peliculesData" not found');
-    }
-    const jsonPelicules = peliculesDataInput.value;
-    const data = JSON.parse(jsonPelicules);
-    this.movies = data;
-  } catch (error) {
-    console.error('Error parsing movies data:', error);
-  }
+    fetch('http://localhost:8000/api/pelicules')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al obtener los datos de la API');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Verificar si la respuesta tiene la estructura esperada
+        if (Array.isArray(data)) {
+          this.movies = data;
+        } else {
+          throw new Error('La respuesta de la API no tiene el formato esperado');
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de la API:', error);
+      });
   }
 };
 </script>

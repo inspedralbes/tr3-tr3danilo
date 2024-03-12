@@ -5,9 +5,8 @@
         <nav class="cine-menu">
           <ul>
             <li><nuxt-link to="/">Inicio</nuxt-link></li>
-            <li><nuxt-link to="/cartelera">Cartelera</nuxt-link></li>
-            <li><nuxt-link to="/proximo-estrenos">Próximos Estrenos</nuxt-link></li>
-            <li><nuxt-link to="/contacto">Contacto</nuxt-link></li>
+            <li><nuxt-link to="/peliculas">Cartelera</nuxt-link></li>
+            <li><nuxt-link to="/sesiones">Sesió del Dia</nuxt-link></li>
           </ul>
         </nav>
       </header>
