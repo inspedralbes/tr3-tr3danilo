@@ -9,7 +9,7 @@ class CreateEntradasTable extends Migration
     {
         Schema::create('entradas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sesion_id')->constrained('sesions');
+            $table->foreignId('sesion_id')->constrained('sessions');
             $table->integer('asientos');
             $table->decimal('precio', 8, 2); // Campo para el precio, se define como decimal con 8 dígitos en total y 2 decimales
             $table->timestamps();
