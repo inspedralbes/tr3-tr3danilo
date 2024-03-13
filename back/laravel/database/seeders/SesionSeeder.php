@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class SessionsSeeder extends Seeder
+class SesionSeeder extends Seeder
 {
     public function run()
     {
@@ -24,3 +24,4 @@ class SessionsSeeder extends Seeder
         }
     }
 }
+
