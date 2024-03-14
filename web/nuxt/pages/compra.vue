@@ -59,11 +59,11 @@ export default {
       storeSesion.setButacaSeleccionada(this.selectedSeats);
       let sessioId = storeSesion.getSessio().id;
       const data = {
-        seats: this.selectedSeats.map(seat => ({ id: seat.id, price: seat.precio })),
+        seats: this.selectedSeats.map(seat => ({ id: seat.id, price: seat.precio, status: seat.status })),
         sessionId: sessioId
       };
       console.log('Datos de la compra:', data);
-      fetch('https://localhost:8000/api/efectuarCompra', {
+      fetch('http://localhost:8000/api/efectuarCompra', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

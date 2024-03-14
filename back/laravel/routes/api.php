@@ -15,7 +15,7 @@ use App\Http\Controllers\SessionController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/compras', [CompraController::class, 'guardarCompra']);
+Route::post('/efectuarCompra', [CompraController::class, 'guardarCompra']);
 Route::get('/compras', [CompraController::class, 'mostrarCompra']);
 Route::get('/sessions', [SessionController::class, 'mostrarSesion']);
 Route::get('/pelicules', [PeliculesController::class, 'showPelicules']);
