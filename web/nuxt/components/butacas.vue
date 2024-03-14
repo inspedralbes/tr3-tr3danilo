@@ -28,7 +28,8 @@ export default {
     return {
       availableSeats: Array.from({ length: 80 }, (_, index) => ({
         id: index + 1,
-        status: 'available'
+        status: 'available',
+        precio: 6.50
       }))
     };
   },
@@ -39,6 +40,7 @@ export default {
         this.$emit('seatSelected', seat);
       } else if (seat.status === 'selected') {
         seat.status = 'available';
+        this.$emit('seatDeselected', seat); // Emitir evento cuando la butaca se deselecciona
       }
     },
     getSeatImage(status) {
