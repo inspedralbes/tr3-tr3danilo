@@ -59,8 +59,7 @@ export default {
       storeSesion.setButacaSeleccionada(this.selectedSeats);
       let sessioId = storeSesion.getSessio().id;
       const data = {
-        seats: this.selectedSeats.map(seat => seat.id),
-        price: this.totalPrice,
+        seats: this.selectedSeats.map(seat => ({ id: seat.id, price: seat.precio })),
         sessionId: sessioId
       };
       console.log('Datos de la compra:', data);
