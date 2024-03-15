@@ -1,51 +1,63 @@
 <template>
-    <div>
-      <header class="cine-header">
-        <!-- Menú de navegación -->
-        <nav class="cine-menu">
-          <ul>
-            <li><nuxt-link to="/">Inicio</nuxt-link></li>
-            <li><nuxt-link to="/peliculas">Cartelera</nuxt-link></li>
-            <li><nuxt-link to="/sesiones">Sesió del Dia</nuxt-link></li>
-          </ul>
-        </nav>
-      </header>
-      <slot/>
-    </div>
-  </template>
-  
-  <script>
-  export default {
+  <header class="cine-header bg-blue-100">
+    <!-- Menú de navegación -->
+    <nav class="cine-menu mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <div class="flex lg:flex-1">
+        <nuxt-link to="/" class="-m-1.5 p-1.5">
+          <span class="sr-only">Your Company</span>
+          <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+        </nuxt-link>
+      </div>
+      <div class="flex lg:hidden">
+        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
+          <span class="sr-only">Open main menu</span>
+          <!-- Icono de menú para dispositivos móviles -->
+        </button>
+      </div>
+      <!-- Elementos del menú principal -->
+      <nav class="hidden lg:flex lg:gap-x-12">
+        <ul class="flex space-x-4">
+          <li><nuxt-link to="/">Inicio</nuxt-link></li>
+          <li><nuxt-link to="/peliculas">Cartelera</nuxt-link></li>
+          <li><nuxt-link to="/sesiones">Sesión del Día</nuxt-link></li>
+        </ul>
+      </nav>
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </nav>
+    <!-- Menú desplegable para dispositivos móviles -->
+    <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
+      <div class="fixed inset-0 z-10" />
+      <DialogPanel class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div class="flex items-center justify-between">
+          <nuxt-link to="/" class="-m-1.5 p-1.5">
+            <span class="sr-only">Your Company</span>
+            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+          </nuxt-link>
+          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
+            <span class="sr-only">Close menu</span>
+            <!-- Icono de cierre para menú desplegable móvil -->
+          </button>
+        </div>
+        <!-- Elementos del menú desplegable -->
+        <ul class="space-y-2 py-6">
+          <li><nuxt-link to="/">Inicio</nuxt-link></li>
+          <li><nuxt-link to="/peliculas">Cartelera</nuxt-link></li>
+          <li><nuxt-link to="/sesiones">Sesión del Día</nuxt-link></li>
+          <!-- Agrega más elementos del menú según sea necesario -->
+        </ul>
+        <div class="py-6">
+          <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+        </div>
+      </DialogPanel>
+    </Dialog>
+  </header>
+</template>
 
-  };
-  </script>
-  
-  <style scoped>
-  .cine-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .cine-menu ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .cine-menu li {
-    display: inline;
-    margin: 0 10px;
-  }
-  
-  .cine-menu a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .cine-menu a:hover {
-    color: #ffd700; /* Cambia el color al pasar el ratón */
-  }
-  </style>
-  
+<script setup>
+import { ref } from 'vue'
+import { Dialog, DialogPanel } from '@headlessui/vue'
+
+const mobileMenuOpen = ref(false)
+</script>

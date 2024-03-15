@@ -1,25 +1,23 @@
 <template>
-    <div class="movie-list">
-      <h1 class="page-title">Benvingut a CineCar</h1>
-      <div class="movies-container">
-        <div v-for="movie in movies" :key="movie.id" class="movie">
-          <div class="movie-card">
-            <div class="movie-poster">
-              <img :src="movie.enllaç_imatge" :alt="movie.títol">
-            </div>
-            <div class="movie-details">
-              <h2>{{ movie.títol }}</h2>
-              <p>{{ movie.descripció }}</p>
-              <p>Director: {{ movie.director }}</p>
-              <p>Any d'estrena: {{ movie.any_estrena }}</p>
-            </div>
-          </div>
+  <div class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-semibold text-center mb-8">Benvingut a CineCar</h1>
+    <div class="flex flex-wrap justify-center gap-8">
+      <div v-for="movie in movies" :key="movie.id" class="bg-white shadow-md hover:shadow-lg transition duration-300 ease-in-out rounded-lg overflow-hidden" style="max-width: 300px;">
+        <div class="overflow-hidden h-96">
+          <img :src="movie.enllaç_imatge" :alt="movie.títol" class="w-full h-full object-cover object-center">
+        </div>
+        <div class="p-4">
+          <h2 class="text-xl font-semibold mb-2">{{ movie.títol }}</h2>
+          <p class="text-gray-700 mb-2">{{ movie.descripció }}</p>
+          <p class="text-gray-700 mb-2">Director: {{ movie.director }}</p>
+          <p class="text-gray-700">Any d'estrena: {{ movie.any_estrena }}</p>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
+  </div>
+</template>
+
+<script>
 export default {
   data() {
     return {
@@ -48,54 +46,3 @@ export default {
   }
 };
 </script>
-  
-  <style>
-  .movie-list {
-    text-align: center;
-  }
-  
-  .page-title {
-    margin-bottom: 20px;
-  }
-  
-  .movies-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .movie {
-    margin: 20px;
-  }
-  
-  .movie-card {
-    width: 300px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease; /* Añadir transición */
-  }
-  
-  .movie-card:hover {
-    transform: translateY(-5px); /* Efecto de levantar al pasar el ratón */
-  }
-  
-  .movie-poster img {
-    width: 100%;
-    height: auto;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  
-  .movie-details {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-  </style>
-  
