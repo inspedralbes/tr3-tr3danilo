@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Compra;
-use App\Models\Butaca; // Asegúrate de que este modelo exista
+use App\Models\Butaca; 
 
 class CompraController extends Controller
 {
@@ -23,7 +23,7 @@ class CompraController extends Controller
 
         $butaca->id = $seatData['id'];
         $butaca->precio = $seatData['price'];
-        $butaca->ocupacion = $seatData['status'];
+        $butaca->ocupacion ='ocupado';
 
         // Guardar los datos en la tabla Butaca
         $butaca->save();
@@ -40,5 +40,23 @@ class CompraController extends Controller
     // Devolver la compra en formato JSON
     return response()->json($compra);
 }
+    public function obtenerButacasOcupadas($sessionId)
+    {
+        // Buscar todas las compras asociadas a la sesión específica
+        $compras = Compra::where('sesion_id', $sessionId)->get();
+
+        // Array para almacenar los IDs de las butacas ocupadas
+        $butacasOcupadas = [];
+
+        // Iterar sobre las compras y obtener los IDs de las butacas ocupadas
+        foreach ($compras as $compra) {
+            $butacasOcupadas[] = $compra->butaca_id;
+        }
+
+        // Buscar las butacas ocupadas en la tabla Butaca que tengan el campo 'ocupacion' igual a 'ocupado'
+        $butacas = Butaca::whereIn('id', $butacasOcupadas)->where('ocupacion', 'ocupado')->get();
+
+        return response()->json($butacas);
+    }
 
 }

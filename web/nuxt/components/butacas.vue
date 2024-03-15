@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { compraStore } from '../stores/compra.js'
 export default {
   props: {
     sessionId: {
@@ -26,31 +27,79 @@ export default {
   },
   data() {
     return {
+      sessioPinia: null,
       availableSeats: Array.from({ length: 80 }, (_, index) => ({
         id: index + 1,
         status: 'available',
         precio: 6.50
-      }))
+      })),
+      occupiedSeats: []
+
     };
   },
   methods: {
     toggleSeatStatus(seat) {
-      if (seat.status === 'available') {
-        seat.status = 'selected';
-        this.$emit('seatSelected', seat);
-      } else if (seat.status === 'selected') {
-        seat.status = 'available';
-        this.$emit('seatDeselected', seat); // Emitir evento cuando la butaca se deselecciona
+  if (seat.status === 'available') {
+    // Comprueba si la butaca está ocupada
+    const isOccupied = this.isSeatOccupied(seat.id);
+    if (isOccupied) {
+      seat.status = 'ocupado'; // Cambiar a 'ocupado'
+    } else {
+      seat.status = 'selected';
+      this.$emit('seatSelected', seat);
+    }
+  } else if (seat.status === 'selected') {
+    seat.status = 'available';
+    this.$emit('seatDeselected', seat);
+  }
+},
+
+    getSeatImage(status) {
+      // Ajusta el retorno de la imagen dependiendo del estado de la butaca
+      switch (status) {
+        case 'selected':
+          return '/butacaVerde.jpg';
+        case 'ocupado':
+          return '/butacaOcupada.jpg';
+        default:
+          return '/butacaAzul.png';
       }
     },
-    getSeatImage(status) {
-      return status === 'selected' ? '/butacaVerde.jpg' : '/butacaAzul.png';
+    isSeatOccupied(seatId) {
+      // Busca la butaca por su ID en el array de butacas ocupadas
+      return this.occupiedSeats.some(seat => seat.id === seatId);
+    },
+  obtenerButacasOcupadas() {
+    console.log('SessioId: Butacas:', this.sessioPinia);
+      fetch(`http://localhost:8000/api/${this.sessioPinia}/ocupadas`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.sessioPinia)
+      })
+      .then(response => response.json())
+      .then(result => {
+        // Actualizar el estado de las butacas ocupadas
+        result.forEach(occupiedSeat => {
+          const seat = this.availableSeats.find(seat => seat.id === occupiedSeat.id);
+          if (seat) {
+            seat.status = 'ocupado';
+          }
+        });
+        console.log('Butacas ocupadas:', result);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     }
   },
   created() {
-    // Verifica si sessionId está definido antes de usarlo
-    if (typeof this.sessionId !== 'undefined') {
-      // Aquí puedes realizar alguna lógica utilizando sessionId
+    let storeSesion= compraStore();   
+    this.sessioPinia = storeSesion.getSessio().id;
+    console.log('ID de la sesión butaca Created:', this.sessioPinia);
+    if (typeof this.sessioPinia !== 'undefined') {
+      this.obtenerButacasOcupadas();
     }
   }
 };
