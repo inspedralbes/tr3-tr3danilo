@@ -1,22 +1,23 @@
 <template>
   <div class="sesiones-list">
-    <h1 class="page-title">Benvingut a CineCar</h1>
-    <div class="sesiones-container movies-container">
+    <h1 class="text-2xl font-bold mb-8">SESSIONS DEL DIA</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
         v-for="session in sessions"
-        :key="session.id"
-        class="sesion-link movie"
-        @click="goToSession(session)"
+        :key="session.sesion.id"
+        class="rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg"
+        @click="goToSession(session.sesion)"
       >
-        <div class="sesion-item movie-card">
-          <div class="sesion-content movie-details">
-            <div class="pelicula-info">
-              <h2>{{ pelicula.titulo }}</h2>
-              <img :src="pelicula.imagen" :alt="pelicula.titulo" class="pelicula-imagen">
-              <p>{{ pelicula.descripcion }}</p>
-            </div>
-            <p class="sesion-hora">{{ session.fecha }} - {{ session.hora }}</p>
+        <div class="relative">
+          <img :src="session.pelicula.imagen" :alt="session.pelicula.titulo" class="w-full h-64 object-cover">
+          <div class="absolute inset-0 bg-black opacity-40"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <h2 class="text-white text-2xl font-bold">{{ session.pelicula.titulo }}</h2>
           </div>
+        </div>
+        <div class="p-4">
+          <p class="text-gray-700">{{ session.pelicula.descripcion }}</p>
+          <p class="text-gray-700 mt-2">{{ session.sesion.fecha }} - {{ session.sesion.hora }}</p>
         </div>
       </div>
     </div>
@@ -25,7 +26,7 @@
 
 <script>
 import { compraStore } from '../stores/compra.js'; // Importa el store de Pinia
-   
+
 export default {
   data() {
     return {
@@ -34,30 +35,23 @@ export default {
     };
   },
   mounted() {
-    this.fetchData();
-    
+    fetch('http://localhost:8000/api/sessions') // Cambiar la ruta si es necesario
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al obtener los datos de la API');
+        }
+        return response.json();
+      })
+      .then(data => {
+        this.sessions = data.sessions;
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de la API:', error);
+      });
   },
   methods: {
-    fetchData() {
-      fetch('http://localhost:8000/api/sessions') // Cambiar la ruta si es necesario
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Error al obtener los datos de la API');
-          }
-          return response.json();
-        })
-        .then(data => {
-          this.pelicula = data.pelicula;
-          this.sessions = data.sessions;
-        })
-        .catch(error => {
-          console.error('Error al obtener datos de la API:', error);
-        });
-    },
     goToSession(session) {
       let storeSesion = compraStore();   
-      console.log("estoy guardando la sesion")
-      console.log(session);
       storeSesion.setSessio(session); // Guarda la sesión en el store de Pinia
       this.$router.push(`/compra`);
     }
@@ -69,51 +63,6 @@ export default {
 .sesiones-list {
   max-width: 800px;
   margin: auto;
-  text-align: center;
 }
 
-.page-title {
-  margin-bottom: 20px;
-}
-
-.sesiones-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.sesion-item {
-  margin: 20px;
-  width: 300px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease; /* Añadir transición */
-}
-
-.sesion-item:hover {
-  transform: translateY(-5px); /* Efecto de levantar al pasar el ratón */
-}
-
-.pelicula-imagen {
-  width: 100%;
-  height: auto;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.sesion-hora {
-  margin-top: 10px;
-}
-
-.movie-details {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
 </style>

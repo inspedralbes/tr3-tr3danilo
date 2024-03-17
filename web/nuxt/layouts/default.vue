@@ -1,11 +1,11 @@
 <template>
-  <header class="cine-header bg-blue-100">
+  <header class="cine-header bg-white-100">
     <!-- Menú de navegación -->
     <nav class="cine-menu mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
         <nuxt-link to="/" class="-m-1.5 p-1.5">
           <span class="sr-only">Your Company</span>
-          <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+          <img class="h-12 w-auto" src="../public/Logo.jpg" alt="" />
         </nuxt-link>
       </div>
       <div class="flex lg:hidden">
@@ -23,7 +23,7 @@
         </ul>
       </nav>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+        <a href="/Login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
     <!-- Menú desplegable para dispositivos móviles -->
@@ -40,15 +40,8 @@
             <!-- Icono de cierre para menú desplegable móvil -->
           </button>
         </div>
-        <!-- Elementos del menú desplegable -->
-        <ul class="space-y-2 py-6">
-          <li><nuxt-link to="/">Inicio</nuxt-link></li>
-          <li><nuxt-link to="/peliculas">Cartelera</nuxt-link></li>
-          <li><nuxt-link to="/sesiones">Sesión del Día</nuxt-link></li>
-          <!-- Agrega más elementos del menú según sea necesario -->
-        </ul>
         <div class="py-6">
-          <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+          <nuxt-link to="/login">Login</nuxt-link>
         </div>
       </DialogPanel>
     </Dialog>

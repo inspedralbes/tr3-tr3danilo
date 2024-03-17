@@ -1,14 +1,28 @@
+<template>
+  <div class="flex flex-col items-center justify-center h-screen">
+    <h1 class="text-3xl font-bold mb-8">Bienvenido a CinesCar</h1>
+    <img src="../public/cineCar.jpg" alt="CinesCar" class=" w-1/2 mb-8 rounded-lg shadow-lg">
 
-  <template>
-    <div class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-    <div>
-      <span class="inline-flex items-center justify-center p-2 bg-indigo-500 rounded-md shadow-lg">
-        <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><!-- ... --></svg>
-      </span>
+    <div class="flex justify-center">
+      <router-link to="/peliculas" class="mx-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        Cartelera
+      </router-link>
+      <router-link to="/sesiones" class="mx-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+        Sessio del Dia
+      </router-link>
+      <router-link to="/login" class="mx-4 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
+        Login
+      </router-link>
     </div>
-    <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3>
-    <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
-      The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even works in outer space.
-    </p>
   </div>
-  </template>
+</template>
+
+<script>
+export default {
+  // Componente de bienvenida
+}
+</script>
+
+<style scoped>
+/* Estilos específicos del componente */
+</style>

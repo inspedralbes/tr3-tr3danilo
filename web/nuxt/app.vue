@@ -3,6 +3,6 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <router-view></router-view>
+    <RouterView />
   </div>
 </template>

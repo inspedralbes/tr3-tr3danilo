@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-    <h1>Compra</h1>
-    <p v-if="sessioPinia">Detalles de la sesión: {{ sessioPinia.id }}</p>
-
-    <button class="session-button" @click="selectSession">Seleccionar sesión</button>
-
     <!-- Renderiza el componente de butacas -->
     <Butacas :sessionId="sessioPinia && sessioPinia.id" @seatSelected="handleSeatSelected"
       @seatDeselected="handleSeatDeselected" />
