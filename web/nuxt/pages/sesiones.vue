@@ -9,7 +9,11 @@
         @click="goToSession(session.sesion)"
       >
         <div class="relative">
-          <img :src="session.pelicula.imagen" :alt="session.pelicula.titulo" class="w-full h-64 object-cover">
+          <img
+            :src="session.pelicula.imagen"
+            :alt="session.pelicula.titulo"
+            class="w-full h-78 object-cover"
+          />
           <div class="absolute inset-0 bg-black opacity-40"></div>
           <div class="absolute inset-0 flex items-center justify-center">
             <h2 class="text-white text-2xl font-bold">{{ session.pelicula.titulo }}</h2>
@@ -17,7 +21,9 @@
         </div>
         <div class="p-4">
           <p class="text-gray-700">{{ session.pelicula.descripcion }}</p>
-          <p class="text-gray-700 mt-2">{{ session.sesion.fecha }} - {{ session.sesion.hora }}</p>
+          <p class="text-gray-700 mt-2">
+            {{ session.sesion.fecha }} - {{ session.sesion.hora }}
+          </p>
         </div>
       </div>
     </div>
@@ -25,37 +31,37 @@
 </template>
 
 <script>
-import { compraStore } from '../stores/compra.js'; // Importa el store de Pinia
+import { compraStore } from "../stores/compra.js"; // Importa el store de Pinia
 
 export default {
   data() {
     return {
       pelicula: null,
-      sessions: []
+      sessions: [],
     };
   },
   mounted() {
-    fetch('http://localhost:8000/api/sessions') // Cambiar la ruta si es necesario
-      .then(response => {
+    fetch("http://localhost:8000/api/sessions") // Cambiar la ruta si es necesario
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Error al obtener los datos de la API');
+          throw new Error("Error al obtener los datos de la API");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         this.sessions = data.sessions;
       })
-      .catch(error => {
-        console.error('Error al obtener datos de la API:', error);
+      .catch((error) => {
+        console.error("Error al obtener datos de la API:", error);
       });
   },
   methods: {
     goToSession(session) {
-      let storeSesion = compraStore();   
+      let storeSesion = compraStore();
       storeSesion.setSessio(session); // Guarda la sesión en el store de Pinia
       this.$router.push(`/compra`);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -64,5 +70,4 @@ export default {
   max-width: 800px;
   margin: auto;
 }
-
 </style>
