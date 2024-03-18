@@ -96,7 +96,7 @@ export default {
   },
   created() {
     let storeSesion= compraStore();   
-    this.sessioPinia = storeSesion.getSessio().id;
+    this.sessioPinia = storeSesion.sessio.id;
     console.log('ID de la sesión butaca Created:', this.sessioPinia);
     if (typeof this.sessioPinia !== 'undefined') {
       this.obtenerButacasOcupadas();

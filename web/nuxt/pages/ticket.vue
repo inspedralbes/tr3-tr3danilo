@@ -1,21 +1,20 @@
 <template>
   <div>
     <div v-if="datosCompra" class="mb-8">
-      <h1 class="text-2xl font-bold mb-4">Datos de la compra</h1>
-      <ul>
-        <li v-for="(seat, index) in datosCompra.seats" :key="index" class="mb-2">
-          <span class="font-bold">ID:</span> {{ seat.id }} - <span class="font-bold">Precio:</span> {{ seat.price }} - <span class="font-bold">Estado:</span> {{ seat.status }}
-        </li>
-      </ul>
-      <p class="mt-4"><span class="font-bold">Session ID:</span> {{ datosCompra.sessionId }}</p>
-      <button @click="abrirModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-        Enviar Correo
-      </button>
-    </div>
-    <div v-else>
-      <p class="text-gray-500">No hay datos de compra disponibles.</p>
-    </div>
-
+  <h1 class="text-2xl font-bold mb-4">Datos de la compra</h1>
+  <ul>
+    <li v-for="(seat, index) in datosCompra.butacas" :key="index" class="mb-2">
+      <span class="font-bold">ID:</span> {{ seat.id }} - <span class="font-bold">Precio:</span> {{ seat.precio }} - <span class="font-bold">Estado:</span> {{ seat.status }}
+    </li>
+  </ul>
+  <p class="mt-4"><span class="font-bold">Session de las: :</span> {{ datosCompra.sesion.hora }}</p>
+  <button @click="abrirModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+    Enviar Correo
+  </button>
+</div>
+<div v-else>
+  <p class="text-gray-500">No hay datos de compra disponibles.</p>
+</div>
     <!-- Modal -->
     <div v-if="modalAbierto" class="fixed z-10 inset-0 overflow-y-auto">
       <div class="flex items-center justify-center min-h-screen">
@@ -49,34 +48,40 @@ export default {
   },
   mounted() {
   let storeSesion = compraStore();
-  let ticket = storeSesion.getSessio();
+  let ticket = storeSesion.sessio;
   console.log("Datos del ticketPinia:", ticket)
   // Obtener los datos de la película y las butacas del ticket
   //let datosButacas = ticket.sessio.butacas;
   //let sesionID = ticket.sessio.id;
-  console.log("Datos de las butacas:", storeSesion.getButacasSeleccionadas());
-
-  fetch(`http://localhost:8000/api/sessions/${sesionID}`) // Cambiar la ruta si es necesario
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al obtener los datos de la API');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log("Datos de la compra:", data.session);
-        if (data && data.session) {
-          this.datosCompra = {
-            butacas: datosButacas,
-            datosSesion: data.session
-          };
-        } else {
-          throw new Error('La respuesta de la API no tiene el formato esperado');
-        }
-      })
-      .catch(error => {
-        console.error('Error al obtener datos de la API:', error);
-      });
+  console.log("Datos de las butacas:", storeSesion.butacas);
+  console.log("ID de la sesión:", ticket.id);
+  fetch(`http://localhost:8000/api/sessions/${ticket.id}`, {
+  method: 'POST', // Cambiar el método a POST
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Error al obtener los datos de la API');
+  }
+  return response.json();
+})
+.then(data => {
+  console.log("Datos de la compra:", data.session);
+  if (data && data.session) {
+    this.datosCompra = {
+      butacas: storeSesion.butacas,
+      datosSesion: data.session
+    };
+  } else {
+    throw new Error('La respuesta de la API no tiene el formato esperado');
+  }
+  console.log("Datos de la compra OFICIAL:", this.datosCompra);
+})
+.catch(error => {
+  console.error('Error al obtener datos de la API:', error);
+});
 },
 
   methods: {

@@ -46,14 +46,15 @@ export default {
     },
   },
   created() {
-    this.sessioPinia = compraStore.sessio;
+    let storeSesion = compraStore();
+    this.sessioPinia = storeSesion.sessio; 
     this.sessionId = this.sessioPinia ? this.sessioPinia.id : null;
   },
   methods: {
     efectuarCompra() {
       let storeSesion = compraStore();
-      storeSesion.setButacaSeleccionada(this.selectedSeats);
-      let sessioId = storeSesion.getSessio().id;
+      storeSesion.butacas= this.selectedSeats;
+      let sessioId = storeSesion.sessio.id;
       const data = {
         seats: this.selectedSeats.map((seat) => ({
           id: seat.id,
@@ -98,10 +99,7 @@ export default {
       if (index !== -1) {
         this.selectedSeats.splice(index, 1);
       }
-    },
-    selectSession() {
-      // Aquí puedes agregar lógica para seleccionar una sesión
-    },
+    }
   },
 };
 </script>

@@ -58,7 +58,9 @@ export default {
   methods: {
     goToSession(session) {
       let storeSesion = compraStore();
-      storeSesion.setSessio(session); // Guarda la sesión en el store de Pinia
+      storeSesion.sessio = session;  // Guarda la sesión en el store de Pinia
+      console.log("Sesión seleccionada Pinia:", storeSesion.sessio.id);
+
       this.$router.push(`/compra`);
     },
   },
