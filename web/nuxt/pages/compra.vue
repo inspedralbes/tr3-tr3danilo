@@ -63,7 +63,7 @@ export default {
         sessionId: sessioId,
       };
       console.log("Datos de la compra:", data);
-      fetch("http://localhost:8000/api/efectuarCompra", {
+     /* fetch("http://localhost:8000/api/efectuarCompra", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,17 +73,12 @@ export default {
         .then((response) => response.json())
         .then((result) => {
           console.log("Compra realizada:", result);
+         
         })
         .catch((error) => {
           // Handle any errors that occurred during the fetch request
           console.error(error);
-        });
-      const ticket = {
-        butacas: this.selectedSeats,
-        session: this.sessionId,
-      };
-      console.log("Datos de la compra:", ticket);
-      this.$router.push({ name: "ticket", props: { datosCompra: ticket } });
+        });*/ this.$router.push({ path:"/ticket"});
     },
     handleSeatSelected(seat) {
       //let storeSesion = compraStore();
