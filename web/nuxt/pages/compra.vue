@@ -47,24 +47,25 @@ export default {
   },
   created() {
     let storeSesion = compraStore();
-    this.sessioPinia = storeSesion.sessio; 
+    this.sessioPinia = storeSesion.sessio;
     this.sessionId = this.sessioPinia ? this.sessioPinia.id : null;
   },
   methods: {
     efectuarCompra() {
       let storeSesion = compraStore();
-      storeSesion.butacas= this.selectedSeats;
+      storeSesion.butacas = this.selectedSeats;
       let sessioId = storeSesion.sessio.id;
       const data = {
         seats: this.selectedSeats.map((seat) => ({
           id: seat.id,
           price: seat.precio,
           status: seat.status,
+          precioTotal: this.totalPrecioButacas,
         })),
         sessionId: sessioId,
       };
       console.log("Datos de la compra:", data);
-     /* fetch("http://localhost:8000/api/efectuarCompra", {
+      /* fetch("http://localhost:8000/api/efectuarCompra", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,12 +75,14 @@ export default {
         .then((response) => response.json())
         .then((result) => {
           console.log("Compra realizada:", result);
-         
+
         })
         .catch((error) => {
           // Handle any errors that occurred during the fetch request
           console.error(error);
-        });*/ this.$router.push({ path:"/ticket"});
+        });*/ this.$router.push(
+        { path: "/ticket" }
+      );
     },
     handleSeatSelected(seat) {
       //let storeSesion = compraStore();
@@ -99,7 +102,7 @@ export default {
       if (index !== -1) {
         this.selectedSeats.splice(index, 1);
       }
-    }
+    },
   },
 };
 </script>
