@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeliculesController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\MailController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,6 +16,7 @@ use App\Http\Controllers\SessionController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
 Route::post('/{sessionId}/ocupadas',  [CompraController::class, 'obtenerButacasOcupadas']);
 Route::post('/efectuarCompra', [CompraController::class, 'guardarCompra']);
 Route::get('/compras', [CompraController::class, 'mostrarCompra']);

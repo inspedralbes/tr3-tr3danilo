@@ -59,30 +59,12 @@ export default {
         seats: this.selectedSeats.map((seat) => ({
           id: seat.id,
           price: seat.precio,
-          status: seat.status,
-          precioTotal: this.totalPrecioButacas,
+          status: seat.status
         })),
         sessionId: sessioId,
       };
       console.log("Datos de la compra:", data);
-      /* fetch("http://localhost:8000/api/efectuarCompra", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log("Compra realizada:", result);
-
-        })
-        .catch((error) => {
-          // Handle any errors that occurred during the fetch request
-          console.error(error);
-        });*/ this.$router.push(
-        { path: "/ticket" }
-      );
+      this.$router.push({ path: "/ticket" });
     },
     handleSeatSelected(seat) {
       //let storeSesion = compraStore();

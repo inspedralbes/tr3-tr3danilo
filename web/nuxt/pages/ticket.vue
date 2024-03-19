@@ -46,21 +46,35 @@
       <!-- Modal -->
       <div
         v-if="modalAbierto"
-        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-      >
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white w-96 rounded-lg p-8 relative">
+          
+          <h2 class="text-xl font-bold mb-4">Nombre</h2>
+          <input
+            v-model="datosUsuario.nombre"
+            type="email"
+            placeholder="Correo Electrónico"
+            class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
+          />
+          <h2 class="text-xl font-bold mb-4">Apellido</h2>
+          <input
+            v-model="datosUsuario.apellido"
+            type="email"
+            placeholder="Correo Electrónico"
+            class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
+          />
           <h2 class="text-xl font-bold mb-4">Enviar Correo Electrónico</h2>
           <input
-            v-model="correoElectronico"
+            v-model="datosUsuario.correoElectronico"
             type="email"
             placeholder="Correo Electrónico"
             class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
           />
           <button
-            @click="enviarCorreo"
+            @click="ConfirmarCompra"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
           >
-            Enviar
+            Confirmar Compra
           </button>
           <button
             @click="cerrarModal"
@@ -93,7 +107,11 @@ export default {
     return {
       datosCompra: null,
       modalAbierto: false,
-      correoElectronico: "",
+      datosUsuario: {
+        nombre: "",
+        apellido: "",
+        correoElectronico: "",
+      }
     };
   },
   mounted() {
@@ -139,7 +157,61 @@ export default {
       this.modalAbierto = false;
       this.correoElectronico = "";
     },
-    enviarCorreo() {
+    ConfirmarCompra() {
+      const datosUsuario = {
+        nombre: this.datosUsuario.nombre,
+        apellido: this.datosUsuario.apellido,
+        correoElectronico: this.datosUsuario.correoElectronico
+    };
+    const data = {
+        seats: this.datosCompra.butacas.map((seat) => ({
+            id: seat.id,
+            price: seat.precio,
+            status: seat.status,
+        })),
+        sessionId: this.datosCompra.datosSesion.sesion.id
+    };  
+    console.log("Datos de la compra LARAVEL:", data);
+    console.log("Datos Usuario LARAVEL:", datosUsuario);
+     fetch("http://localhost:8000/api/efectuarCompra", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("Compra realizada:", result);
+
+        })
+        .catch((error) => {
+          // Handle any errors that occurred during the fetch request
+          console.error(error);
+        });
+
+/*
+    // Realizar una solicitud POST al servidor
+    fetch('http://localhost:8000/api/enviarCorreo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ datosUsuario, datosCompra })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al guardar los datos de compra');
+        }
+        console.log('Datos de compra guardados correctamente');
+        // Aquí podrías agregar lógica adicional si es necesario, como cerrar el modal
+        this.cerrarModal();
+    })
+    .catch(error => {
+        console.error('Error al guardar los datos de compra:', error);
+    });
+*/
+
       this.cerrarModal();
     },
   },

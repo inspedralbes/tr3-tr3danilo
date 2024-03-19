@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center h-screen">
+  <div class="flex flex-col items-center h-screen">
     <h1 class="text-3xl font-bold mb-8">Bienvenido a CinesCar</h1>
     <img src="/cineCar.jpg" alt="CinesCar" class="w-1/2 mb-8 rounded-lg shadow-lg" />
 
