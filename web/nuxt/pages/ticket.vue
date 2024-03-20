@@ -158,6 +158,9 @@ export default {
       this.correoElectronico = "";
     },
     ConfirmarCompra() {
+      let storeSesion = compraStore();
+      let idUsuario = storeSesion.idUser;
+      console.log("ID del usuario COMPRA:", idUsuario);
       const datosUsuario = {
         nombre: this.datosUsuario.nombre,
         apellido: this.datosUsuario.apellido,
@@ -169,7 +172,8 @@ export default {
             price: seat.precio,
             status: seat.status,
         })),
-        sessionId: this.datosCompra.datosSesion.sesion.id
+        sessionId: this.datosCompra.datosSesion.sesion.id,
+        id_user: idUsuario
     };  
     console.log("Datos de la compra LARAVEL:", data);
     console.log("Datos Usuario LARAVEL:", datosUsuario);

@@ -1,5 +1,5 @@
 export const compraStore = defineStore('compra', () => {
   //ALVARO
-  state: () => ({ sessio: {}, butacas: [] })
+  state: () => ({ sessio: {}, butacas: [], idUser: 0})
 
 })

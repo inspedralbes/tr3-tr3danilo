@@ -15,31 +15,38 @@ class CompraController extends Controller
     }
 
     public function guardarCompra(Request $request)
-{
-    $data = $request->all();
-    // Iterar sobre cada asiento y guardar cada uno en su propia fila en la tabla Butaca
-    foreach ($data['seats'] as $seatData) {
-        $butaca = new Butaca();
+    {
+        // Verificar si el usuario está autenticado
+            if($user = auth('sanctum')->user()) {    
+            $data = $request->all();
+            // Iterar sobre cada asiento y guardar cada uno en su propia fila en la tabla Butaca
+            foreach ($data['seats'] as $seatData) {
+                $butaca = new Butaca();
 
-        $butaca->id = $seatData['id'];
-        $butaca->precio = $seatData['price'];
-        $butaca->ocupacion ='ocupado';
+                $butaca->id = $seatData['id'];
+                $butaca->precio = $seatData['price'];
+                $butaca->ocupacion = 'ocupado';
 
-        // Guardar los datos en la tabla Butaca
-        $butaca->save();
+                // Guardar los datos en la tabla Butaca
+                $butaca->save();
 
-        $compra = new Compra();
+                $compra = new Compra();
 
-        $compra->sesion_id = $data['sessionId'];
-        $compra->butaca_id = $butaca->id; // Guardar el id del asiento en la tabla Compra
+                $compra->sesion_id = $data['sessionId'];
+                $compra->butaca_id = $butaca->id; // Guardar el id del asiento en la tabla Compra
+                $compra->id_user = auth()->id(); // Asignar el ID del usuario autenticado
 
-        // Guardar la compra en la base de datos
-        $compra->save();
+                // Guardar la compra en la base de datos
+                $compra->save();
+            }
+
+            // Devolver la compra en formato JSON
+            return response()->json($compra);
+        } else {
+            // El usuario no está autenticado, devolver una respuesta de error
+            return response()->json(['error' => 'No autorizado'], 401);
+        }
     }
-
-    // Devolver la compra en formato JSON
-    return response()->json($compra);
-}
     public function obtenerButacasOcupadas($sessionId)
     {
         // Buscar todas las compras asociadas a la sesión específica
