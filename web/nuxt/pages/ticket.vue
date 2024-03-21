@@ -198,14 +198,14 @@ export default {
           console.error(error);
         });
 
-/*
+
     // Realizar una solicitud POST al servidor
     fetch('http://localhost:8000/api/enviarCorreo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ datosUsuario, datosCompra })
+        body: JSON.stringify({ datosUsuario, data })
     })
     .then(response => {
         if (!response.ok) {
@@ -218,7 +218,6 @@ export default {
     .catch(error => {
         console.error('Error al guardar los datos de compra:', error);
     });
-*/
 
       this.cerrarModal();
     },

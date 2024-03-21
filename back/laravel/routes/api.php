@@ -23,13 +23,15 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 // Rutas de correo que no requieren autenticación
-Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
+//Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
 
 // Rutas de compra que requieren autenticación
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/efectuarCompra', [CompraController::class, 'guardarCompra']);
-    Route::get('/compras', [CompraController::class, 'mostrarCompra']);
+    
 });
+Route::post('/{sessionId}/ocupadas',  [CompraController::class, 'obtenerButacasOcupadas']);
+Route::get('/compras', [CompraController::class, 'mostrarCompra']);
 
 // Rutas de sesiones y películas que no requieren autenticación
 Route::get('/sessions', [SessionController::class, 'mostrarSesion']);

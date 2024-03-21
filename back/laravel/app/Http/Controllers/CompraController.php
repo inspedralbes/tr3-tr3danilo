@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Compra;
 use App\Models\Butaca; 
+use App\Models\Session; 
 
 class CompraController extends Controller
 {
@@ -13,6 +14,39 @@ class CompraController extends Controller
         $compra = Compra::all();
         return response()->json($compra);
     }
+
+        public function obtenerSesionYButacasDeUsuario(Request $request)
+        {
+            // Verificar si el usuario está autenticado
+            if ($user = auth('sanctum')->user()) {
+                $data = $request->all();
+                $sessionId = $data['sessionId'];
+
+                // Obtener las compras asociadas a la sesión y al usuario
+                $compras = Compra::where('sesion_id', $sessionId)
+                    ->where('id_user', $user->id)
+                    ->get();
+
+                // Array para almacenar los datos de la sesión y las butacas compradas
+                $sesionYButacas = [];
+
+                // Obtener los datos de la sesión
+                $sesionYButacas['sesion'] = Session::find($sessionId);
+
+                // Obtener los datos de las butacas compradas
+                $butacasCompradas = [];
+                foreach ($compras as $compra) {
+                    $butacasCompradas[] = Butaca::find($compra->butaca_id);
+                }
+                $sesionYButacas['butacas'] = $butacasCompradas;
+
+                // Devolver los datos en formato JSON
+                return response()->json($sesionYButacas);
+            } else {
+                // El usuario no está autenticado, devolver una respuesta de error
+                return response()->json(['error' => 'No autorizado'], 401);
+            }
+        }
 
     public function guardarCompra(Request $request)
     {

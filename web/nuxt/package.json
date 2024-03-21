@@ -13,6 +13,8 @@
     "@headlessui/vue": "^1.7.19",
     "@heroicons/vue": "^2.1.1",
     "@pinia/nuxt": "^0.5.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.1",
     "normalize.css": "^8.0.1",
     "nuxt": "^3.10.3",
     "pinia": "^2.1.7",
