@@ -7,31 +7,36 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Aquí es donde puedes registrar las rutas API para tu aplicación.
+| Estas rutas son cargadas por el RouteServiceProvider dentro de un grupo al que se le asigna el middleware "api".
 |
 */
 
-//RUTAS DE AUTENTICACION
+// Rutas de autenticación que no requieren autenticación
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-//RUTAS CORREO
+
+// Rutas de correo que no requieren autenticación
 Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
-//RUTAS DE COMPRA
-Route::post('/{sessionId}/ocupadas',  [CompraController::class, 'obtenerButacasOcupadas']);
-Route::post('/efectuarCompra', [CompraController::class, 'guardarCompra']);
-Route::get('/compras', [CompraController::class, 'mostrarCompra']);
-//RUTAS DE SESIONES Y PELICULAS
+
+// Rutas de compra que requieren autenticación
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/efectuarCompra', [CompraController::class, 'guardarCompra']);
+    Route::get('/compras', [CompraController::class, 'mostrarCompra']);
+});
+
+// Rutas de sesiones y películas que no requieren autenticación
 Route::get('/sessions', [SessionController::class, 'mostrarSesion']);
 Route::post('/sessions/{sesionId}', [SessionController::class, 'mostrarSesionPorId']);
 Route::get('/pelicules', [PeliculesController::class, 'showPelicules']);
 
+// Ruta de usuario autenticado (solo para fines de prueba)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

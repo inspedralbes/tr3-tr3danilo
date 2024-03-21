@@ -177,10 +177,14 @@ export default {
     };  
     console.log("Datos de la compra LARAVEL:", data);
     console.log("Datos Usuario LARAVEL:", datosUsuario);
+
+    const token = localStorage.getItem('token');
+
      fetch("http://localhost:8000/api/efectuarCompra", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(data),
       })

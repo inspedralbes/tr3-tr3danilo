@@ -34,7 +34,7 @@ class CompraController extends Controller
 
                 $compra->sesion_id = $data['sessionId'];
                 $compra->butaca_id = $butaca->id; // Guardar el id del asiento en la tabla Compra
-                $compra->id_user = auth()->id(); // Asignar el ID del usuario autenticado
+                $compra->id_user = auth('sanctum')->id(); // Asignar el ID del usuario autenticado
 
                 // Guardar la compra en la base de datos
                 $compra->save();
