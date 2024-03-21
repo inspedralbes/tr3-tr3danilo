@@ -27,6 +27,7 @@
           <li><nuxt-link to="/">Inicio</nuxt-link></li>
           <li><nuxt-link to="/peliculas">Cartelera</nuxt-link></li>
           <li><nuxt-link to="/sesiones">Sesión del Día</nuxt-link></li>
+          <li><nuxt-link to="/entradas">Entradas</nuxt-link></li>
         </ul>
       </nav>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">

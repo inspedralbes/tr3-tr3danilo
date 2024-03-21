@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Compra;
 use App\Models\Butaca; 
 use App\Models\Session; 
+use App\Models\User; 
 
 class CompraController extends Controller
 {
@@ -14,8 +15,42 @@ class CompraController extends Controller
         $compra = Compra::all();
         return response()->json($compra);
     }
+        public function obtenerEntradasPorCorreo(Request $request)
+        {
+            $data = $request->all();
+            $correo = $data['correo'];
 
-        public function obtenerSesionYButacasDeUsuario(Request $request)
+            // Obtener el usuario por su correo
+            $usuario = User::where('email', $correo)->first();
+
+            if ($usuario) {
+                // Obtener las compras asociadas al usuario
+                $compras = Compra::where('id_user', $usuario->id)->get();
+
+                // Array para almacenar los datos de la sesión y las butacas compradas
+                $sesionYButacas = [];
+
+                // Obtener los datos de la sesión
+                $sesionYButacas['sesion'] = [];
+
+                foreach ($compras as $compra) {
+                    // Obtener los datos de la sesión
+                    $sesionYButacas['sesion'][] = Session::find($compra->sesion_id);
+
+                    // Obtener los datos de las butacas compradas
+                    $butacasCompradas = [];
+                    $butacasCompradas[] = Butaca::find($compra->butaca_id);
+                    $sesionYButacas['butacas'][] = $butacasCompradas;
+                }
+
+                // Devolver los datos en formato JSON
+                return response()->json($sesionYButacas);
+            } else {
+                // No se encontró un usuario con el correo proporcionado
+                return response()->json(['error' => 'Usuario no encontrado'], 404);
+            }
+        }
+        public function obtenerEntradasDeUsuario(Request $request)
         {
             // Verificar si el usuario está autenticado
             if ($user = auth('sanctum')->user()) {
