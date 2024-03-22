@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      ruta: 'https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       sessioPinia: null,
       availableSeats: Array.from({ length: 80 }, (_, index) => ({
         id: index + 1,
@@ -77,7 +77,7 @@ export default {
     },
   obtenerButacasOcupadas() {
     console.log('SessioId: Butacas:', this.sessioPinia);
-      fetch(`${this.ruta}/${this.sessioPinia}/ocupadas`, {
+      fetch(`${this.ruta}/api/${this.sessioPinia}/ocupadas`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

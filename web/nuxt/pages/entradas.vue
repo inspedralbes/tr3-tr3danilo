@@ -54,7 +54,7 @@ Ruta Local: http://localhost:8000
 export default {
   data() {
     return {
-      ruta: 'https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       datosCompra: null, // Array para almacenar las entradas del usuario
       showModal: true, // Variable para controlar la visibilidad del modal
       email: '', // Variable para almacenar el correo electrónico introducido por el usuario

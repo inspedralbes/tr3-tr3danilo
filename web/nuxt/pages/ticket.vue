@@ -109,7 +109,7 @@ Ruta Local: http://localhost:8000
 export default {
   data() {
     return {
-      ruta: 'https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       datosCompra: null,
       modalAbierto: false,
       datosUsuario: {
@@ -185,7 +185,7 @@ export default {
 
     const token = localStorage.getItem('token');
 
-     fetch("http://localhost:8000/api/efectuarCompra", {
+     fetch(`${this.ruta}/api/efectuarCompra`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -205,7 +205,7 @@ export default {
 
 
     // Realizar una solicitud POST al servidor
-    fetch('http://localhost:8000/api/enviarCorreo', {
+    fetch(`${this.ruta}/api/enviarCorreo`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

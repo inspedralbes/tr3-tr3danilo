@@ -54,7 +54,7 @@ Ruta Local: http://localhost:8000
 export default {
   data() {
     return {
-      ruta: 'https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       name: '',
       email: '',
       password: ''
