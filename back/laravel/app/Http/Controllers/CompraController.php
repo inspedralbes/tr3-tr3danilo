@@ -50,39 +50,6 @@ class CompraController extends Controller
                 return response()->json(['error' => 'Usuario no encontrado'], 404);
             }
         }
-        public function obtenerEntradasDeUsuario(Request $request)
-        {
-            // Verificar si el usuario está autenticado
-            if ($user = auth('sanctum')->user()) {
-                $data = $request->all();
-                $sessionId = $data['sessionId'];
-
-                // Obtener las compras asociadas a la sesión y al usuario
-                $compras = Compra::where('sesion_id', $sessionId)
-                    ->where('id_user', $user->id)
-                    ->get();
-
-                // Array para almacenar los datos de la sesión y las butacas compradas
-                $sesionYButacas = [];
-
-                // Obtener los datos de la sesión
-                $sesionYButacas['sesion'] = Session::find($sessionId);
-
-                // Obtener los datos de las butacas compradas
-                $butacasCompradas = [];
-                foreach ($compras as $compra) {
-                    $butacasCompradas[] = Butaca::find($compra->butaca_id);
-                }
-                $sesionYButacas['butacas'] = $butacasCompradas;
-
-                // Devolver los datos en formato JSON
-                return response()->json($sesionYButacas);
-            } else {
-                // El usuario no está autenticado, devolver una respuesta de error
-                return response()->json(['error' => 'No autorizado'], 401);
-            }
-        }
-
     public function guardarCompra(Request $request)
     {
         // Verificar si el usuario está autenticado

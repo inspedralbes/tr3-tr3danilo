@@ -23,12 +23,11 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 // Rutas de correo que no requieren autenticación
-//Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
+Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
 
 // Rutas de compra que requieren autenticación
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/efectuarCompra', [CompraController::class, 'guardarCompra']);
-    Route::get('/obtenerEntradasDeUsuario', [CompraController::class, 'obtenerEntradasDeUsuario']);
 });
 
 Route::post('/obtenerEntradasPorCorreo', [CompraController::class, 'obtenerEntradasPorCorreo']);
