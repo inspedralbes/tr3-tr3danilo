@@ -1,3 +1,7 @@
+<!-- 
+Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -50,6 +54,7 @@
 export default {
   data() {
     return {
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       name: '',
       email: '',
       password: ''
@@ -58,7 +63,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch('http://localhost:8000/api/register', {
+        const response = await fetch(`${this.ruta}/api/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

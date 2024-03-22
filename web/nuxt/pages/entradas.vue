@@ -1,3 +1,8 @@
+<!-- 
+Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
+
 <template>
   <div>
     <!-- Mostrar resumen de entradas si el usuario está autenticado -->
@@ -49,6 +54,7 @@
 export default {
   data() {
     return {
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       datosCompra: null, // Array para almacenar las entradas del usuario
       showModal: true, // Variable para controlar la visibilidad del modal
       email: '', // Variable para almacenar el correo electrónico introducido por el usuario
@@ -58,7 +64,7 @@ export default {
   methods: {
     async obtenerEntradasPorCorreo() {
       try {
-        const response = await fetch('http://localhost:8000/api/obtenerEntradasPorCorreo', {
+        const response = await fetch(`${this.ruta}/api/obtenerEntradasPorCorreo`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

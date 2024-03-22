@@ -1,3 +1,7 @@
+<!-- 
+Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
   <div class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <h1 class="text-3xl font-semibold text-center mb-8">CARTELERA</h1>
@@ -21,11 +25,12 @@
 export default {
   data() {
     return {
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       movies: []
     };
   },
   mounted() {
-    fetch('http://localhost:8000/api/pelicules')
+    fetch(`${this.ruta}/api/pelicules`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al obtener los datos de la API');

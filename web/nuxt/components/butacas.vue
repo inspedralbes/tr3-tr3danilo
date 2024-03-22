@@ -1,3 +1,8 @@
+
+<!-- 
+Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
   <div>
     <h2>Selecciona tus butacas</h2>
@@ -27,6 +32,7 @@ export default {
   },
   data() {
     return {
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       sessioPinia: null,
       availableSeats: Array.from({ length: 80 }, (_, index) => ({
         id: index + 1,
@@ -71,7 +77,7 @@ export default {
     },
   obtenerButacasOcupadas() {
     console.log('SessioId: Butacas:', this.sessioPinia);
-      fetch(`http://localhost:8000/api/${this.sessioPinia}/ocupadas`, {
+      fetch(`${this.ruta}/${this.sessioPinia}/ocupadas`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

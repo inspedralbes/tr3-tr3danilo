@@ -1,3 +1,7 @@
+<!-- 
+Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
   <div class="flex justify-center h-screen">
     <div>
@@ -105,6 +109,7 @@
 export default {
   data() {
     return {
+      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       datosCompra: null,
       modalAbierto: false,
       datosUsuario: {
@@ -120,7 +125,7 @@ export default {
     console.log("Datos del ticketPinia:", ticket);
     console.log("Datos de las butacas:", storeSesion.butacas);
     console.log("ID de la sesión:", ticket.id);
-    fetch(`http://localhost:8000/api/sessions/${ticket.id}`, {
+    fetch(`${this.ruta}/api/sessions/${ticket.id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

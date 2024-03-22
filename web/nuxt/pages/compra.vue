@@ -1,3 +1,8 @@
+
+<!-- 
+Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
   <div class="container">
     <!-- Renderiza el componente de butacas -->

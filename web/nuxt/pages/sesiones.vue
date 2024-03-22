@@ -1,3 +1,7 @@
+<!-- 
+Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
   <div class="sesiones-list">
     <h1 class="text-2xl font-bold mb-8">SESSIONS DEL DIA</h1>
@@ -36,12 +40,13 @@ import { compraStore } from "../stores/compra.js"; // Importa el store de Pinia
 export default {
   data() {
     return {
+      ruta: "http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public",
       pelicula: null,
       sessions: [],
     };
   },
   mounted() {
-    fetch("http://localhost:8000/api/sessions") // Cambiar la ruta si es necesario
+    fetch(`${this.ruta}/api/sessions`) // Cambiar la ruta si es necesario
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error al obtener los datos de la API");
