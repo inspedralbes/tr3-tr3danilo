@@ -1,5 +1,5 @@
 <!-- 
-Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta de desplegament: https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
 Ruta Local: http://localhost:8000
 -->
 <template>
@@ -54,7 +54,7 @@ Ruta Local: http://localhost:8000
 export default {
   data() {
     return {
-      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
+      ruta: 'https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       name: '',
       email: '',
       password: ''

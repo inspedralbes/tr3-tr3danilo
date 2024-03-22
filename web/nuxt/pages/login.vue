@@ -1,6 +1,5 @@
-
 <!-- 
-Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta de desplegament: https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
 Ruta Local: http://localhost:8000
 -->
 <template>
@@ -50,7 +49,7 @@ import { compraStore } from "../stores/compra.js";
 export default {
   data() {
     return {
-      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
+      ruta: 'https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
       email: '',
       password: ''
     };

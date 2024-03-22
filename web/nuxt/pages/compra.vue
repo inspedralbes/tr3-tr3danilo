@@ -1,6 +1,6 @@
 
 <!-- 
-Ruta de desplegament: http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta de desplegament: https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
 Ruta Local: http://localhost:8000
 -->
 <template>
