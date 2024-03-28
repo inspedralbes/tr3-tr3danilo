@@ -41,24 +41,30 @@ export default {
     };
   },
   mounted() {
-    fetch("http://localhost:8000/api/sessions") // Cambiar la ruta si es necesario
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error al obtener los datos de la API");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        this.sessions = data.sessions;
-      })
-      .catch((error) => {
-        console.error("Error al obtener datos de la API:", error);
-      });
+    let storeSesion = compraStore();
+    if (storeSesion.isAuthenticated) {
+      fetch("http://localhost:8000/api/sessions") // Cambiar la ruta si es necesario
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener los datos de la API");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          this.sessions = data.sessions;
+        })
+        .catch((error) => {
+          console.error("Error al obtener datos de la API:", error);
+        });
+    } else {
+      alert("No estás autenticado, por favor inicia sesión");
+      this.$router.push(`/login`);
+    }
   },
   methods: {
     goToSession(session) {
       let storeSesion = compraStore();
-      storeSesion.sessio = session;  // Guarda la sesión en el store de Pinia
+      storeSesion.sessio = session; // Guarda la sesión en el store de Pinia
       console.log("Sesión seleccionada Pinia:", storeSesion.sessio.id);
 
       this.$router.push(`/compra`);
