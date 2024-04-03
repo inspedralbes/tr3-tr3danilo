@@ -48,12 +48,16 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:3',
+            'role' => 'nullable|in:user,admin',
         ]);
-    
+
+        $role = $request->input('role', 'user');
+
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $role,
         ]);
     
         $user->save();
@@ -63,9 +67,21 @@ class AuthController extends Controller
         $response = [
             'user' => $user,
             'token' => $token,
-            'message' => 'Usuario registrado con éxito'
+            'message' => 'Usuario registrado con éxito',
+            'role' => $role,
         ];
     
         return response()->json($response, 201);
+    }
+
+    public function obtenRolUsuario($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            return $user->role;
+        }
+
+        return null;
     }
 }

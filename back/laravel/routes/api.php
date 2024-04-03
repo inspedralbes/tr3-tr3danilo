@@ -21,6 +21,7 @@ use App\Http\Controllers\MailController;
 // Rutas de autenticación que no requieren autenticación
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::get('/{idUser}/obtenRolUsuario', [AuthController::class, 'obtenRolUsuario']);
 
 // Rutas de correo que no requieren autenticación
 Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
