@@ -29,8 +29,9 @@ class AuthController extends Controller
         }
         $token = $user->createToken('api_access')->plainTextToken;
         $response = [
-            'user_id' => $user->id, // Incluir el ID del usuario en la respuesta
+            'user_id' => $user->id, 
             'token' => $token,
+            'role' => $user->role, 
             'message' => 'Inicio de sesión exitoso'
         ];
 
@@ -78,10 +79,10 @@ class AuthController extends Controller
     {
         $user = User::find($id);
 
-        if ($user) {
-            return $user->role;
-        }
+    if ($user) {
+        return response()->json(['role' => $user->role]);
+    }
 
-        return null;
+    return response()->json(['error' => 'Usuario no encontrado'], 404);
     }
 }

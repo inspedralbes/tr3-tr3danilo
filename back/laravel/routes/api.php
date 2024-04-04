@@ -38,6 +38,7 @@ Route::get('/compras', [CompraController::class, 'mostrarCompra']);
 // Rutas de sesiones y películas que no requieren autenticación
 Route::get('/sessions', [SessionController::class, 'mostrarSesion']);
 Route::post('/sessions/{sesionId}', [SessionController::class, 'mostrarSesionPorId']);
+Route::post('/afegirSessio', [SessionController::class, 'afegirSessio']);
 Route::get('/pelicules', [PeliculesController::class, 'showPelicules']);
 
 // Ruta de usuario autenticado (solo para fines de prueba)

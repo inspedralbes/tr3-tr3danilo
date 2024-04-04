@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\SessionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,7 @@ use App\Http\Controllers\MailController;
 |
 */
 Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
+Route::post('/afegirSessio', [SessionController::class, 'afegirSessio']);
 Route::get('/', function () {
     return view('welcome');
 });

@@ -76,6 +76,7 @@ import { compraStore } from "../stores/compra.js";
 export default {
   data() {
     return {
+      esAdmin: false,
       email: "",
       password: "",
     };
@@ -102,6 +103,9 @@ export default {
 
         // Almacena el token en localStorage o Vuex
         localStorage.setItem("token", data.token);
+        if (data.role == "admin") {
+          this.esAdmin = true;
+        }
 
         // Guardar el ID del usuario en el estado global de Pinia
         const store = compraStore();
@@ -110,7 +114,11 @@ export default {
         console.log("ID del usuario PINIA:", store.idUser);
         // Redirige al usuario a la página de inicio, por ejemplo
         console.log("Login USUARIO correcto");
+        if (this.esAdmin) {
+          this.$router.push("/Admin/panelAdmin");
+        } else {
         this.$router.push("/sesiones");
+        }
       } catch (error) {
         console.error(error);
         // Manejar el error, por ejemplo, mostrar un mensaje al usuario
