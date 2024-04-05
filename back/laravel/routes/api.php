@@ -39,6 +39,7 @@ Route::get('/compras', [CompraController::class, 'mostrarCompra']);
 Route::get('/sessions', [SessionController::class, 'mostrarSesion']);
 Route::post('/sessions/{sesionId}', [SessionController::class, 'mostrarSesionPorId']);
 Route::post('/afegirSessio', [SessionController::class, 'afegirSessio']);
+Route::delete('esborrarSessio/{sesionId}', [SessionController::class, 'esborrarSession']);
 Route::get('/pelicules', [PeliculesController::class, 'showPelicules']);
 
 // Ruta de usuario autenticado (solo para fines de prueba)

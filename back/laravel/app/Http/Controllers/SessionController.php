@@ -102,7 +102,18 @@ class SessionController extends Controller
     
         return response()->json(['session' => $session]);
     }
+    public function esborrarSession($sesionId)
+    {
+        $session = Session::find($sesionId);
     
+        if (!$session) {
+            return response()->json(['error' => 'No se encontró la sesión']);
+        }
+    
+        $session->delete();
+    
+        return response()->json(['message' => 'Sesión eliminada']);
+    }
     
 
 }

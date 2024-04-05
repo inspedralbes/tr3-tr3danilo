@@ -86,10 +86,7 @@ export default {
       console.log("Sesión seleccionada Pinia:", storeSesion.sessio.id);
 
       this.$router.push(`/compra`);
-    },
-    agregarSesion() {
-      
-    },
+    }
   },
 };
 </script>
