@@ -6,6 +6,8 @@ use App\Models\Session;
 use App\Models\Pelicules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+
 
 class SessionController extends Controller
 {
@@ -82,6 +84,35 @@ class SessionController extends Controller
     
         // Devolver la sesión con la información de la película asociada
         return response()->json(['session' => $sesionConPelicula]);
+    }
+    public function afegirSessio(Request $request)
+    {
+        $request->validate([
+            'data.pelicula_id' => 'required',
+            'data.fecha' => 'required|date_format:d/m/Y',
+            'data.hora' => 'required|date_format:H:i:s',
+        ]);
+    
+        $session = new Session();
+        $session->pelicula_id = $request->input('data.pelicula_id');
+        $session->fecha = Carbon::createFromFormat('d/m/Y', $request->input('data.fecha'))->toDateString();
+        $session->hora = $request->input('data.hora');
+    
+        $session->save();
+    
+        return response()->json(['session' => $session]);
+    }
+    public function esborrarSession($sesionId)
+    {
+        $session = Session::find($sesionId);
+    
+        if (!$session) {
+            return response()->json(['error' => 'No se encontró la sesión']);
+        }
+    
+        $session->delete();
+    
+        return response()->json(['message' => 'Sesión eliminada']);
     }
     
 

@@ -38,7 +38,7 @@ Ruta Local: http://localhost:8000
         </div>
 
         <div>
-          <button @click="login" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+          <button @click="registre" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ export default {
     };
   },
   methods: {
-    async login() {
+    async registre() {
       try {
         const response = await fetch(`${this.ruta}/api/register`, {
           method: 'POST',
@@ -72,6 +72,7 @@ export default {
             name: this.name,
             email: this.email,
             password: this.password,
+            role: 'user',
           }),
         });
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('role')->default('user'); // Añadir el campo de rol con valor por defecto 'user'
         });
     }
 
