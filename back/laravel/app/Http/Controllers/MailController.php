@@ -10,17 +10,18 @@ class MailController extends Controller
 {
     public function enviarCorreoConfirmacion(Request $request)
     {
+        /*
         $data = $request->validate([
             'nombre' => 'required|string',
             'apellido' => 'required|string',
             'correoElectronico' => 'required|email',
             'datosCompra' => 'required|array', // Asegúrate de que los datos de compra estén presentes y sean un array
         ]);
-
-        $correoElectronico = $data['correoElectronico'];
-        $nombre = $data['nombre'];
-        $apellido = $data['apellido'];
-        $datosCompra = $data['datosCompra']; // Datos de compra proporcionados en la solicitud
+*/
+        $correoElectronico = $request['correoElectronico'];
+        $nombre = $request['nombre'];
+        $apellido = $request['apellido'];
+        $datosCompra = $request['datosCompra']; // Datos de compra proporcionados en la solicitud
 
         // Aquí puedes personalizar los datos que deseas enviar al correo electrónico
 

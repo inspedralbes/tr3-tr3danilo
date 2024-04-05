@@ -87,12 +87,13 @@ class SessionController extends Controller
     }
     public function afegirSessio(Request $request)
     {
+        /*
         $request->validate([
             'data.pelicula_id' => 'required',
             'data.fecha' => 'required|date_format:d/m/Y',
             'data.hora' => 'required|date_format:H:i:s',
         ]);
-    
+    */
         $session = new Session();
         $session->pelicula_id = $request->input('data.pelicula_id');
         $session->fecha = Carbon::createFromFormat('d/m/Y', $request->input('data.fecha'))->toDateString();
