@@ -43,7 +43,7 @@ export default {
     //Comporbar si el usuario es admin
     let storeSesion = compraStore();
     let idUser = storeSesion.idUser;
-    fetch(`http://localhost:8000/api/${idUser}/obtenRolUsuario`) 
+    fetch(`${this.ruta}/api/${idUser}/obtenRolUsuario`) 
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error checking admin status");
