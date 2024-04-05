@@ -15,20 +15,10 @@ class CreateSessionsTable extends Migration
             $table->time('hora');
             $table->timestamps();
         });
-
-        // Agregar restricción de clave externa con eliminación en cascada
-        Schema::table('compras', function (Blueprint $table) {
-            $table->foreign('sesion_id')->references('id')->on('sessions')->onDelete('cascade');
-        });
     }
 
     public function down()
     {
-        Schema::table('compras', function (Blueprint $table) {
-            // Eliminar la restricción de clave externa antes de eliminar la tabla
-            $table->dropForeign(['sesion_id']);
-        });
-
         Schema::dropIfExists('sessions');
     }
 }
