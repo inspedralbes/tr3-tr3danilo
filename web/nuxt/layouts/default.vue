@@ -31,10 +31,13 @@
         </ul>
       </nav>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="/Login" class="text-sm font-semibold leading-6 text-gray-900"
-          >Log in <span aria-hidden="true">&rarr;</span></a
-        >
-      </div>
+    <a v-if="store.isAuthenticated" @click="logout" class="text-sm font-semibold leading-6 text-gray-900"
+      >Logout <span aria-hidden="true">&rarr;</span></a
+    >
+    <a v-else href="/Login" class="text-sm font-semibold leading-6 text-gray-900"
+      >Log in <span aria-hidden="true">&rarr;</span></a
+    >
+  </div>
     </nav>
     <!-- Menú desplegable para dispositivos móviles -->
     <Dialog
@@ -66,6 +69,7 @@
           </button>
         </div>
         <div class="py-6">
+          <a v-if="store.isAuthenticated" @click="logout">Logout</a>
           <nuxt-link to="/login">Login</nuxt-link>
         </div>
       </DialogPanel>
@@ -76,6 +80,11 @@
 <script setup>
 import { ref } from "vue";
 import { Dialog, DialogPanel } from "@headlessui/vue";
+import { compraStore } from "../stores/compra.js";
 
 const mobileMenuOpen = ref(false);
+const store = compraStore();
+function logout() {
+  store.isAuthenticated = false;
+}
 </script>

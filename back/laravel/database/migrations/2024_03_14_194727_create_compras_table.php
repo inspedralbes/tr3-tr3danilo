@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('id_user')->nullable()->constrained('users');
             $table->foreignId('butaca_id')->constrained('butacas');
             $table->timestamps();
+            $table->unique(['butaca_id', 'sesion_id']);
         });
     }
 

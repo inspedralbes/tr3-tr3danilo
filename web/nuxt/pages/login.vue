@@ -54,13 +54,13 @@
             @click="login"
             class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Sign in
+            Inicia Sessio
           </button>
         </div>
       </div>
 
       <p class="mt-10 text-center text-sm text-gray-500">
-        Not a member?
+        No ets membre?
         <a
           href="/registre"
           class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
@@ -103,21 +103,22 @@ export default {
 
         // Almacena el token en localStorage o Vuex
         localStorage.setItem("token", data.token);
-        if (data.role == "admin") {
-          this.esAdmin = true;
-        }
-
-        // Guardar el ID del usuario en el estado global de Pinia
         const store = compraStore();
+        if (data.role == "admin") {
+          store.isAdmin = true;
+        }else{
+          store.isAdmin = false;
+          console.log("No eres administrador");
+        }
         store.idUser = data.user_id;
         store.isAuthenticated = true;
         console.log("ID del usuario PINIA:", store.idUser);
         // Redirige al usuario a la página de inicio, por ejemplo
         console.log("Login USUARIO correcto");
-        if (this.esAdmin) {
+        if (store.isAdmin) {
           this.$router.push("/Admin/panelAdmin");
         } else {
-        this.$router.push("/sesiones");
+          this.$router.push("/sesiones");
         }
       } catch (error) {
         console.error(error);

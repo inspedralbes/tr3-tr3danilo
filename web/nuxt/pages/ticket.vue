@@ -200,12 +200,12 @@ export default {
 
 
     // Realizar una solicitud POST al servidor
-    fetch('http://localhost:8000/enviarCorreo', {
+    fetch('http://localhost:8000/api/enviarCorreo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ datosUsuario, data })
+        body: JSON.stringify({ datosUsuario, datosCompra: this.datosCompra})
     })
     .then(response => {
         if (!response.ok) {

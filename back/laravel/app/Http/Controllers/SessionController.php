@@ -15,14 +15,14 @@ class SessionController extends Controller
     {
         // Obtener todas las sesiones disponibles
         $sessions = Session::all();
-        Log::info($sessions);
+        //Log::info($sessions);
         // Lista para almacenar sesiones con película asociada
         $sesionesConPelicula = [];
     
         foreach ($sessions as $session) {
             // Obtener el ID de la película de la sesión
             $peliculaId = $session->pelicula_id;
-            Log::info("Pelicula id: $peliculaId");
+            //Log::info("Pelicula id: $peliculaId");
             // Buscar la película correspondiente en la tabla de películas
             $pelicula = Pelicules::find($peliculaId);
         
@@ -41,7 +41,7 @@ class SessionController extends Controller
                 Log::info("No hay pelicula asociada a la sesion");
             }
         }
-        Log::info($sesionesConPelicula);
+        //Log::info($sesionesConPelicula);
         // Devolver la lista de sesiones con la información de la película asociada
         return response()->json(['sessions' => $sesionesConPelicula]);
     }
@@ -55,11 +55,11 @@ class SessionController extends Controller
             return response()->json(['error' => 'No se encontró la sesión']);
         }
     
-        Log::info($session);
+        //Log::info($session);
     
         // Obtener el ID de la película de la sesión
         $peliculaId = $session->pelicula_id;
-        Log::info("Pelicula id: $peliculaId");
+        //Log::info("Pelicula id: $peliculaId");
     
         // Buscar la película correspondiente en la tabla de películas
         $pelicula = Pelicules::find($peliculaId);
@@ -80,7 +80,7 @@ class SessionController extends Controller
             return response()->json(['error' => 'No hay película asociada a la sesión']);
         }
     
-        Log::info($sesionConPelicula);
+        //Log::info($sesionConPelicula);
     
         // Devolver la sesión con la información de la película asociada
         return response()->json(['session' => $sesionConPelicula]);
