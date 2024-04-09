@@ -30,9 +30,21 @@
             {{ datosCompra.datosSesion.sesion.hora }}
           </p>
 
+           <!-- Agregar timer con animación de carga -->
+           <div v-if="!compraRealizada" class="mt-4">
+            <p class="text-gray-500">Realizando compra...</p>
+            <div class="loader"></div> <!-- Aquí iría la animación de carga -->
+          </div>
+
+          <!-- Mostrar mensaje de compra realizada -->
+          <div v-if="compraRealizada" class="mt-4">
+            <p class="text-green-500">Compra realizada correctamente.</p>
+          </div>
+
           <button
             @click="abrirModal"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block"
+            :disabled="compraRealizada"
           >
             Enviar Correo
           </button>
@@ -111,7 +123,8 @@ export default {
         nombre: "",
         apellido: "",
         correoElectronico: "",
-      }
+      },
+      compraRealizada: false,
     };
   },
   mounted() {
@@ -214,6 +227,7 @@ export default {
         console.log('Datos de compra guardados correctamente');
         // Aquí podrías agregar lógica adicional si es necesario, como cerrar el modal
         this.cerrarModal();
+        this.compraRealizada = true;
     })
     .catch(error => {
         console.error('Error al guardar los datos de compra:', error);
@@ -224,3 +238,20 @@ export default {
   },
 };
 </script>
+<style>
+/* Estilos para la animación de carga */
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #6c63ff; /* Color del borde izquierdo */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite; /* Animación de rotación */
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

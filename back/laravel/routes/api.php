@@ -22,6 +22,7 @@ use App\Http\Controllers\MailController;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::get('/{idUser}/obtenRolUsuario', [AuthController::class, 'obtenRolUsuario']);
+Route::delete('borrarUsuario/{idUser}', [AuthController::class, 'borrarUsuario']);
 
 // Rutas de correo que no requieren autenticación
 Route::post('/enviarCorreo', [MailController::class, 'enviarCorreoConfirmacion']);
@@ -34,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/obtenerEntradasPorCorreo', [CompraController::class, 'obtenerEntradasPorCorreo']);
 Route::post('/{sessionId}/ocupadas',  [CompraController::class, 'obtenerButacasOcupadas']);
 Route::get('/compras', [CompraController::class, 'mostrarCompra']);
+Route::get('butacasPorSesion', [CompraController::class, 'obtenerButacasPorSesion']);
 
 // Rutas de sesiones y películas que no requieren autenticación
 Route::get('/sessions', [SessionController::class, 'mostrarSesion']);

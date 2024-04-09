@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Compra;
-use App\Models\Butaca; 
-use App\Models\Session; 
-use App\Models\User; 
+use App\Models\Butaca;
+use App\Models\Session;
+use App\Models\User;
 
 class CompraController extends Controller
 {
@@ -15,45 +15,45 @@ class CompraController extends Controller
         $compra = Compra::all();
         return response()->json($compra);
     }
-        public function obtenerEntradasPorCorreo(Request $request)
-        {
-            $data = $request->all();
-            $correo = $data['correo'];
+    public function obtenerEntradasPorCorreo(Request $request)
+    {
+        $data = $request->all();
+        $correo = $data['correo'];
 
-            // Obtener el usuario por su correo
-            $usuario = User::where('email', $correo)->first();
+        // Obtener el usuario por su correo
+        $usuario = User::where('email', $correo)->first();
 
-            if ($usuario) {
-                // Obtener las compras asociadas al usuario
-                $compras = Compra::where('id_user', $usuario->id)->get();
+        if ($usuario) {
+            // Obtener las compras asociadas al usuario
+            $compras = Compra::where('id_user', $usuario->id)->get();
 
-                // Array para almacenar los datos de la sesión y las butacas compradas
-                $sesionYButacas = [];
+            // Array para almacenar los datos de la sesión y las butacas compradas
+            $sesionYButacas = [];
 
+            // Obtener los datos de la sesión
+            $sesionYButacas['sesion'] = [];
+
+            foreach ($compras as $compra) {
                 // Obtener los datos de la sesión
-                $sesionYButacas['sesion'] = [];
+                $sesionYButacas['sesion'][] = Session::find($compra->sesion_id);
 
-                foreach ($compras as $compra) {
-                    // Obtener los datos de la sesión
-                    $sesionYButacas['sesion'][] = Session::find($compra->sesion_id);
-
-                    // Obtener los datos de las butacas compradas
-                    $butacasCompradas = [];
-                    $butacasCompradas[] = Butaca::find($compra->butaca_id);
-                    $sesionYButacas['butacas'][] = $butacasCompradas;
-                }
-
-                // Devolver los datos en formato JSON
-                return response()->json($sesionYButacas);
-            } else {
-                // No se encontró un usuario con el correo proporcionado
-                return response()->json(['error' => 'Usuario no encontrado'], 404);
+                // Obtener los datos de las butacas compradas
+                $butacasCompradas = [];
+                $butacasCompradas[] = Butaca::find($compra->butaca_id);
+                $sesionYButacas['butacas'][] = $butacasCompradas;
             }
+
+            // Devolver los datos en formato JSON
+            return response()->json($sesionYButacas);
+        } else {
+            // No se encontró un usuario con el correo proporcionado
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
+    }
     public function guardarCompra(Request $request)
     {
         // Verificar si el usuario está autenticado
-            if($user = auth('sanctum')->user()) {    
+        if ($user = auth('sanctum')->user()) {
             $data = $request->all();
             // Iterar sobre cada asiento y guardar cada uno en su propia fila en la tabla Butaca
             foreach ($data['seats'] as $seatData) {
@@ -101,5 +101,38 @@ class CompraController extends Controller
 
         return response()->json($butacas);
     }
+    
+    public function obtenerButacasPorSesion()
+    {
+        // Obtener todas las sesiones
+        $sesiones = Session::all();
+
+        // Array para almacenar el número total de butacas ocupadas por sesión
+        $butacasOcupadasPorSesion = [];
+
+        // Iterar sobre las sesiones y contar las butacas ocupadas
+        foreach ($sesiones as $sesion) {
+            // Buscar todas las compras asociadas a la sesión específica
+            $compras = Compra::where('sesion_id', $sesion->id)->get();
+
+            // Contador para almacenar el número total de butacas ocupadas
+            $numeroButacasOcupadas = 0;
+
+            // Iterar sobre las compras y contar las butacas ocupadas
+            foreach ($compras as $compra) {
+                $butacasOcupadas = Butaca::where('id', $compra->butaca_id)->where('ocupacion', 'ocupado')->count();
+                $numeroButacasOcupadas += $butacasOcupadas;
+            }
+
+            // Almacenar el número total de butacas ocupadas por sesión
+            $butacasOcupadasPorSesion[$sesion->id] = $numeroButacasOcupadas;
+        }
+
+        return $butacasOcupadasPorSesion;
+    }
+ 
+    
+    
+
 
 }

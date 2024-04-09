@@ -114,7 +114,6 @@ class SessionController extends Controller
         $session->delete();
     
         return response()->json(['message' => 'Sesión eliminada']);
-    }
-    
+    }    
 
 }

@@ -14,12 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('compras', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->foreignId('sesion_id')->constrained('sessions');
             $table->foreignId('id_user')->nullable()->constrained('users');
             $table->foreignId('butaca_id')->constrained('butacas');
             $table->timestamps();
-            $table->unique(['butaca_id', 'sesion_id']);
         });
     }
 
