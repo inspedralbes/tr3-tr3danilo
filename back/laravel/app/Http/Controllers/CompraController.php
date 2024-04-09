@@ -55,29 +55,33 @@ class CompraController extends Controller
         // Verificar si el usuario está autenticado
         if ($user = auth('sanctum')->user()) {
             $data = $request->all();
-            // Iterar sobre cada asiento y guardar cada uno en su propia fila en la tabla Butaca
+            
+            // Obtener el precio base
+            $precioBase = 6;
+            
+            // Iterar sobre cada asiento y guardar cada uno en la tabla Compra
             foreach ($data['seats'] as $seatData) {
-                $butaca = new Butaca();
-
-                $butaca->id = $seatData['id'];
-                $butaca->precio = $seatData['price'];
-                $butaca->ocupacion = 'ocupado';
-
-                // Guardar los datos en la tabla Butaca
-                $butaca->save();
-
                 $compra = new Compra();
-
+    
                 $compra->sesion_id = $data['sessionId'];
-                $compra->butaca_id = $butaca->id; // Guardar el id del asiento en la tabla Compra
                 $compra->id_user = auth('sanctum')->id(); // Asignar el ID del usuario autenticado
-
+                $compra->butaca = $seatData['row'] . '-' . $seatData['column']; // Supongo que tienes una forma de identificar cada butaca
+                
+                // Verificar si la butaca está en la fila 6 y ajustar el precio
+                if ($seatData['row'] == 6) {
+                    $compra->precio = 8; // Precio diferente para la fila 6
+                } else {
+                    $compra->precio = $precioBase;
+                }
+                
+                $compra->ocupacion = 'ocupado';
+    
                 // Guardar la compra en la base de datos
                 $compra->save();
             }
-
-            // Devolver la compra en formato JSON
-            return response()->json($compra);
+    
+            // Devolver la respuesta exitosa
+            return response()->json(['message' => 'Compra guardada correctamente'], 200);
         } else {
             // El usuario no está autenticado, devolver una respuesta de error
             return response()->json(['error' => 'No autorizado'], 401);

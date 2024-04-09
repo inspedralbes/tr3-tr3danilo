@@ -65,14 +65,14 @@
           <input
             v-model="datosUsuario.nombre"
             type="email"
-            placeholder="Correo Electrónico"
+            placeholder="Nombre"
             class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
           />
           <h2 class="text-xl font-bold mb-4">Apellido</h2>
           <input
             v-model="datosUsuario.apellido"
             type="email"
-            placeholder="Correo Electrónico"
+            placeholder="Apellido"
             class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
           />
           <h2 class="text-xl font-bold mb-4">Enviar Correo Electrónico</h2>

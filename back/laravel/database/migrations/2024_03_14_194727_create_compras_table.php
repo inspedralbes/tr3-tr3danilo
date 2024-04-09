@@ -17,7 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignId('sesion_id')->constrained('sessions');
             $table->foreignId('id_user')->nullable()->constrained('users');
-            $table->foreignId('butaca_id')->constrained('butacas');
+            $table->string('butaca');
+            $table->decimal('precio', 8, 2);
+            $table->string('ocupacion');
             $table->timestamps();
         });
     }
