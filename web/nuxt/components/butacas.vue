@@ -9,7 +9,7 @@
         :src="getSeatImage(seat)"
         @click="toggleSeatStatus(seat)"
         :id="'seat_' + seat.id"
-        class="max-w-xxs"
+        class="w-15 h-12" 
       >
     </div>
     <h1 class="screen-title">PANTALLA</h1>
