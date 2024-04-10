@@ -1,23 +1,35 @@
 <template>
   <div>
-    <h2>Selecciona tus butacas</h2>
+    <h2 class="text-lg font-semibold mb-4">Selecciona tus butacas</h2>
     <div class="screen"></div> <!-- Línea simulando la pantalla -->
-    <div class="cinema-seats">
+    <div class="grid grid-cols-10 gap-1 justify-center max-w-4xl mx-auto">
       <img 
         v-for="seat in availableSeats" 
         :key="seat.id" 
-        :src="getSeatImage(seat.status)"
+        :src="getSeatImage(seat)"
         @click="toggleSeatStatus(seat)"
         :id="'seat_' + seat.id"
+        class="max-w-xxs"
       >
     </div>
     <h1 class="screen-title">PANTALLA</h1>
     <div class="screen"></div> <!-- Línea simulando la pantalla -->
+    <p>Total de butacas seleccionadas: {{ totalSelectedSeats }}</p>
+    <p>Total a pagar: {{ totalPrice }}€</p>
+    <div v-if="selectedSeats.length">
+      <p>Butacas seleccionadas:</p>
+      <ul>
+        <li v-for="(seat, index) in selectedSeats" :key="index">
+          Fila {{ seat.row }} Columna {{ seat.column }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 import { compraStore } from '../stores/compra.js'
+
 export default {
   props: {
     sessionId: {
@@ -28,35 +40,57 @@ export default {
   data() {
     return {
       sessioPinia: null,
-      availableSeats: Array.from({ length: 80 }, (_, index) => ({
+      availableSeats: Array.from({ length: 120 }, (_, index) => ({
         id: index + 1,
+        row: Math.floor(index / 10) + 1,
+        column: index % 10 + 1,
         status: 'available',
         precio: 6.50
       })),
-      occupiedSeats: []
-
+      selectedSeats: [],
+      vipRow: 6,
+      vipPrice: 8,
+      normalPrice: 6,
     };
+  },
+  computed: {
+    totalSelectedSeats() {
+      return this.selectedSeats.length;
+    },
+    totalPrice() {
+      let total = 0;
+      this.selectedSeats.forEach(seat => {
+        total += seat.row === this.vipRow ? this.vipPrice : this.normalPrice;
+      });
+      return total;
+    }
   },
   methods: {
     toggleSeatStatus(seat) {
-  if (seat.status === 'available') {
-    // Comprueba si la butaca está ocupada
-    const isOccupied = this.isSeatOccupied(seat.id);
-    if (isOccupied) {
-      seat.status = 'ocupado'; // Cambiar a 'ocupado'
-    } else {
-      seat.status = 'selected';
-      this.$emit('seatSelected', seat);
-    }
-  } else if (seat.status === 'selected') {
-    seat.status = 'available';
-    this.$emit('seatDeselected', seat);
-  }
-},
-
-    getSeatImage(status) {
-      // Ajusta el retorno de la imagen dependiendo del estado de la butaca
-      switch (status) {
+      if (seat.status === 'available') {
+        seat.status = 'selected';
+        this.selectedSeats.push(seat);
+      } else if (seat.status === 'selected') {
+        seat.status = 'available';
+        const index = this.selectedSeats.findIndex(s => s.id === seat.id);
+        if (index !== -1) {
+          this.selectedSeats.splice(index, 1);
+        }
+      }
+      this.emitSelectedSeats();
+    },
+    emitSelectedSeats() {
+      const selectedSeatsData = this.selectedSeats.map(seat => ({
+        row: seat.row,
+        column: seat.column
+      }));
+      this.$emit('selectedSeatsUpdated', {
+        sessionId: this.sessionId,
+        seats: selectedSeatsData
+      });
+    },
+    getSeatImage(seat) {
+      switch (seat.status) {
         case 'selected':
           return '/butacaVerde.jpg';
         case 'ocupado':
@@ -65,41 +99,12 @@ export default {
           return '/butacaAzul.png';
       }
     },
-    isSeatOccupied(seatId) {
-      // Busca la butaca por su ID en el array de butacas ocupadas
-      return this.occupiedSeats.some(seat => seat.id === seatId);
-    },
-  obtenerButacasOcupadas() {
-    console.log('SessioId: Butacas:', this.sessioPinia);
-      fetch(`http://localhost:8000/api/${this.sessioPinia}/ocupadas`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.sessioPinia)
-      })
-      .then(response => response.json())
-      .then(result => {
-        // Actualizar el estado de las butacas ocupadas
-        result.forEach(occupiedSeat => {
-          const seat = this.availableSeats.find(seat => seat.id === occupiedSeat.id);
-          if (seat) {
-            seat.status = 'ocupado';
-          }
-        });
-        console.log('Butacas ocupadas:', result);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    }
   },
   created() {
-    let storeSesion= compraStore();   
+    let storeSesion = compraStore();   
     this.sessioPinia = storeSesion.sessio.id;
-    console.log('ID de la sesión butaca Created:', this.sessioPinia);
     if (typeof this.sessioPinia !== 'undefined') {
-      this.obtenerButacasOcupadas();
+      //this.obtenerButacasOcupadas();
     }
   }
 };
@@ -107,19 +112,6 @@ export default {
 
 <style scoped>
 /* Estilos CSS específicos del componente */
-.cinema-seats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto; /* Centrar el contenedor */
-  max-width: 900px; /* Ancho máximo para dejar espacio en los lados */
-}
-
-.cinema-seats img {
-  margin: 5px;
-  width: 50px; /* Ajusta el tamaño de la imagen según sea necesario */
-}
-
 .screen {
   border-top: 2px solid black; /* Línea simulando la pantalla */
   width: 100%; /* Ancho total */
