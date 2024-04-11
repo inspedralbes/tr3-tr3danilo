@@ -24,23 +24,28 @@ class CompraController extends Controller
         $usuario = User::where('email', $correo)->first();
 
         if ($usuario) {
-            // Obtener las compras asociadas al usuario
+            // Obtener todas las compras asociadas al usuario
             $compras = Compra::where('id_user', $usuario->id)->get();
 
             // Array para almacenar los datos de la sesión y las butacas compradas
             $sesionYButacas = [];
 
-            // Obtener los datos de la sesión
-            $sesionYButacas['sesion'] = [];
-
             foreach ($compras as $compra) {
-                // Obtener los datos de la sesión
-                $sesionYButacas['sesion'][] = Session::find($compra->sesion_id);
+                // Obtener los datos de la sesión asociada a la compra
+                $sesion = Session::find($compra->sesion_id);
 
-                // Obtener los datos de las butacas compradas
-                $butacasCompradas = [];
-                $butacasCompradas[] = Butaca::find($compra->butaca_id);
-                $sesionYButacas['butacas'][] = $butacasCompradas;
+                // Obtener los datos de las butacas compradas en esta compra
+                $butacasCompradas = [
+                    'butaca' => $compra->butaca,
+                    'precio' => $compra->precio,
+                ];
+                
+
+                // Agregar los datos de la sesión y las butacas compradas al array
+                $sesionYButacas[] = [
+                    'sesion' => $sesion,
+                    'butacas' => [$butacasCompradas],
+                ];
             }
 
             // Devolver los datos en formato JSON
@@ -50,36 +55,38 @@ class CompraController extends Controller
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
     }
+
+
     public function guardarCompra(Request $request)
     {
         // Verificar si el usuario está autenticado
         if ($user = auth('sanctum')->user()) {
             $data = $request->all();
-            
+
             // Obtener el precio base
             $precioBase = 6;
-            
+
             // Iterar sobre cada asiento y guardar cada uno en la tabla Compra
             foreach ($data['seats'] as $seatData) {
                 $compra = new Compra();
-    
+
                 $compra->sesion_id = $data['sessionId'];
                 $compra->id_user = auth('sanctum')->id(); // Asignar el ID del usuario autenticado
                 $compra->butaca = $seatData['row'] . '-' . $seatData['column']; // Supongo que tienes una forma de identificar cada butaca
-                
+
                 // Verificar si la butaca está en la fila 6 y ajustar el precio
                 if ($seatData['row'] == 6) {
                     $compra->precio = 8; // Precio diferente para la fila 6
                 } else {
                     $compra->precio = $precioBase;
                 }
-                
+
                 $compra->ocupacion = 'ocupado';
-    
+
                 // Guardar la compra en la base de datos
                 $compra->save();
             }
-    
+
             // Devolver la respuesta exitosa
             return response()->json(['message' => 'Compra guardada correctamente'], 200);
         } else {
@@ -89,23 +96,19 @@ class CompraController extends Controller
     }
     public function obtenerButacasOcupadas($sessionId)
     {
-        // Buscar todas las compras asociadas a la sesión específica
-        $compras = Compra::where('sesion_id', $sessionId)->get();
+        $compras = Compra::where('sesion_id', $sessionId)->where('ocupacion', 'ocupado')->get();
 
-        // Array para almacenar los IDs de las butacas ocupadas
+        // Array para almacenar las butacas ocupadas
         $butacasOcupadas = [];
 
-        // Iterar sobre las compras y obtener los IDs de las butacas ocupadas
+        // Iterar sobre las compras y obtener las butacas ocupadas
         foreach ($compras as $compra) {
-            $butacasOcupadas[] = $compra->butaca_id;
+            $butacasOcupadas[] = $compra->butaca;
         }
 
-        // Buscar las butacas ocupadas en la tabla Butaca que tengan el campo 'ocupacion' igual a 'ocupado'
-        $butacas = Butaca::whereIn('id', $butacasOcupadas)->where('ocupacion', 'ocupado')->get();
-
-        return response()->json($butacas);
+        return response()->json($butacasOcupadas);
     }
-    
+
     public function obtenerButacasPorSesion()
     {
         // Obtener todas las sesiones
@@ -134,9 +137,4 @@ class CompraController extends Controller
 
         return $butacasOcupadasPorSesion;
     }
- 
-    
-    
-
-
 }

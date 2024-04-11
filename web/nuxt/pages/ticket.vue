@@ -18,7 +18,7 @@
 
           <ul>
             <li v-for="(seat, index) in datosCompra.butacas" :key="index" class="mb-2">
-              <span class="font-semibold">Butaca:</span> {{ seat.id }} -
+              <span class="font-semibold">Fila:</span> {{ seat.row }} Butaca: {{ seat.column }} -
               <span class="font-semibold">Precio:</span> {{ seat.precio }}€
             </li>
           </ul>
@@ -181,9 +181,8 @@ export default {
     };
     const data = {
         seats: this.datosCompra.butacas.map((seat) => ({
-            id: seat.id,
-            price: seat.precio,
-            status: seat.status,
+            row: seat.row,
+            column: seat.column
         })),
         sessionId: this.datosCompra.datosSesion.sesion.id,
         id_user: idUsuario

@@ -5,27 +5,25 @@
       <h1 class="text-3xl font-semibold mb-2">Detalles de la compra</h1>
       <!-- Reducido el margen inferior -->
 
-      <div class="bg-gray-100 rounded-lg p-6">
+      <!-- Iterar sobre cada objeto en el array datosCompra -->
+      <div v-for="(compra, index) in datosCompra" :key="'compra-' + index" class="bg-gray-100 rounded-lg p-6 mb-4">
         <h2 class="text-xl font-bold mb-4">
-          {{ datosCompra.sesion[0].pelicula_id }}
+          Película ID: {{ compra.sesion.pelicula_id }}
         </h2>
 
+        <!-- Iterar sobre cada butaca en la propiedad butacas de cada compra -->
         <ul>
-          <li v-for="(seatGroup, index) in datosCompra.butacas" :key="'seatGroup-' + index" class="mb-2">
-            <ul>
-              <li v-for="(seat, seatIndex) in seatGroup" :key="'seat-' + seatIndex">
-                <span class="font-semibold">Butaca:</span> {{ seat.id }} -
-                <span class="font-semibold">Precio:</span> {{ seat.precio }}€
-              </li>
-            </ul>
+          <li v-for="(butaca, butacaIndex) in compra.butacas" :key="'butaca-' + butacaIndex" class="mb-2">
+            <span class="font-semibold">Butaca:</span> {{ butaca.butaca }} -
+            <span class="font-semibold">Precio:</span> {{ butaca.precio }}€
           </li>
         </ul>
 
         <p class="mt-4">
           <span class="font-semibold">Día:</span>
-          {{ datosCompra.sesion[0].fecha }} -
+          {{ compra.sesion.fecha }} -
           <span class="font-semibold">Hora:</span>
-          {{ datosCompra.sesion[0].hora }}
+          {{ compra.sesion.hora }}
         </p>
       </div>
     </div>
@@ -75,10 +73,8 @@ export default {
         const data = await response.json();
         console.log('Datos de las entradas:', data);
         // Actualizar las entradas en el componente con los datos obtenidos del servidor
-        this.datosCompra = {
-          sesion: data.sesion,
-          butacas: data.butacas
-        };
+        this.datosCompra = data;
+        console.log('Datos de la compra:', this.datosCompra);
 
         // Reiniciar el correo electrónico después de una solicitud exitosa
         this.email = '';

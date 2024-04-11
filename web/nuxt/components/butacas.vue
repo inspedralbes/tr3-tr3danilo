@@ -3,14 +3,8 @@
     <h2 class="text-lg font-semibold mb-4">Selecciona tus butacas</h2>
     <div class="screen"></div> <!-- Línea simulando la pantalla -->
     <div class="grid grid-cols-10 gap-1 justify-center max-w-4xl mx-auto">
-      <img 
-        v-for="seat in availableSeats" 
-        :key="seat.id" 
-        :src="getSeatImage(seat)"
-        @click="toggleSeatStatus(seat)"
-        :id="'seat_' + seat.id"
-        class="w-15 h-12" 
-      >
+      <img v-for="seat in availableSeats" :key="seat.id" :src="getSeatImage(seat)" @click="toggleSeatStatus(seat)"
+        :id="'seat_' + seat.id" class="w-15 h-12">
     </div>
     <h1 class="screen-title">PANTALLA</h1>
     <div class="screen"></div> <!-- Línea simulando la pantalla -->
@@ -48,6 +42,7 @@ export default {
         precio: 6.50
       })),
       selectedSeats: [],
+      butacasOcupadas: [],
       vipRow: 6,
       vipPrice: 8,
       normalPrice: 6,
@@ -79,11 +74,40 @@ export default {
       }
       this.emitSelectedSeats();
     },
+    obtenerButacasOcupadas() {
+      fetch(`http://localhost:8000/api/${this.sessionId}/ocupadas`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sessionId: this.sessionId }),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('No se pudo obtener las butacas ocupadas');
+          }
+          return response.json();
+        })
+        .then(data => {
+          this.butacasOcupadas = data;
+          this.availableSeats.forEach(seat => {
+            const seatId = `${seat.row}-${seat.column}`;
+            if (this.butacasOcupadas.includes(seatId)) {
+              seat.status = 'ocupado';
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Error al obtener las butacas ocupadas:', error);
+        });
+    },
     emitSelectedSeats() {
       const selectedSeatsData = this.selectedSeats.map(seat => ({
         row: seat.row,
-        column: seat.column
+        column: seat.column,
+        precio: seat.row === this.vipRow ? this.vipPrice : this.normalPrice,
       }));
+      console.log('Butacas seleccionadas PaginaButacas:', selectedSeatsData);
       this.$emit('selectedSeatsUpdated', {
         sessionId: this.sessionId,
         seats: selectedSeatsData
@@ -101,10 +125,10 @@ export default {
     },
   },
   created() {
-    let storeSesion = compraStore();   
+    let storeSesion = compraStore();
     this.sessioPinia = storeSesion.sessio.id;
     if (typeof this.sessioPinia !== 'undefined') {
-      //this.obtenerButacasOcupadas();
+      this.obtenerButacasOcupadas();
     }
   }
 };
@@ -113,9 +137,12 @@ export default {
 <style scoped>
 /* Estilos CSS específicos del componente */
 .screen {
-  border-top: 2px solid black; /* Línea simulando la pantalla */
-  width: 100%; /* Ancho total */
-  margin-bottom: 10px; /* Espacio entre la pantalla y las butacas */
+  border-top: 2px solid black;
+  /* Línea simulando la pantalla */
+  width: 100%;
+  /* Ancho total */
+  margin-bottom: 10px;
+  /* Espacio entre la pantalla y las butacas */
 }
 
 .screen-title {

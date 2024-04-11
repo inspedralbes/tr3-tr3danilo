@@ -68,10 +68,9 @@
         <img src="{{ $datosCompra['datosSesion']['pelicula']['imagen'] }}" alt="Imagen de la película" class="imagen-pelicula">
 
         <p>Película: {{ $datosCompra['datosSesion']['pelicula']['titulo'] }}</p>
-        <p>Butacas:</p>
         <ul>
             @foreach($datosCompra['butacas'] as $butaca)
-                <li>Butaca: {{ $butaca['id'] }} - Precio: {{ $butaca['precio'] }}€</li>
+                <li>Fila: {{ $butaca['row'] }} Butaca: {{ $butaca['column'] }} - Precio: {{ $butaca['precio'] }}€</li>
             @endforeach
         </ul>
         <p>Día: {{ $datosCompra['datosSesion']['sesion']['fecha'] }}</p>
