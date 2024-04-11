@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     toggleSeatStatus(seat) {
-      if (seat.status === 'available') {
+      if (seat.status === 'available' || seat.status === 'vip') {
         seat.status = 'selected';
         this.selectedSeats.push(seat);
       } else if (seat.status === 'selected') {
@@ -114,13 +114,24 @@ export default {
       });
     },
     getSeatImage(seat) {
-      switch (seat.status) {
-        case 'selected':
-          return '/butacaVerde.jpg';
-        case 'ocupado':
-          return '/butacaOcupada.jpg';
-        default:
-          return '/butacaAzul.png';
+      // Comprobar si la butaca está seleccionada
+      if (seat.status === 'selected') {
+        // Devolver la imagen de la butaca seleccionada
+        return '/butacaVerde.jpg';
+      } else if (seat.row === this.vipRow) {
+        // Comprobar si la butaca pertenece a la fila 6
+        // Devolver la imagen de la butaca VIP
+        return '/butacaVip.jpg';
+      } else {
+        // Devolver la imagen según el estado de la butaca
+        switch (seat.status) {
+          case 'selected':
+            return '/butacaVerde.jpg';
+          case 'ocupado':
+            return '/butacaOcupada.jpg';
+          default:
+            return '/butacaAzul.png';
+        }
       }
     },
   },

@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Models\Compra;
 use App\Models\Butaca;
 use App\Models\Session;
+use App\Models\Pelicules;
 use App\Models\User;
 
 class CompraController extends Controller
@@ -34,6 +35,12 @@ class CompraController extends Controller
                 // Obtener los datos de la sesión asociada a la compra
                 $sesion = Session::find($compra->sesion_id);
 
+                // Obtener los datos de la película asociada a la sesión
+                $pelicula = Pelicules::find($sesion->pelicula_id);
+
+                // Obtener el título de la película
+                $titulo = $pelicula->títol;
+                
                 // Obtener los datos de las butacas compradas en esta compra
                 $butacasCompradas = [
                     'butaca' => $compra->butaca,
@@ -44,6 +51,7 @@ class CompraController extends Controller
                 // Agregar los datos de la sesión y las butacas compradas al array
                 $sesionYButacas[] = [
                     'sesion' => $sesion,
+                    'pelicula' => $titulo,
                     'butacas' => [$butacasCompradas],
                 ];
             }
@@ -110,31 +118,37 @@ class CompraController extends Controller
     }
 
     public function obtenerButacasPorSesion()
-    {
-        // Obtener todas las sesiones
-        $sesiones = Session::all();
-
-        // Array para almacenar el número total de butacas ocupadas por sesión
-        $butacasOcupadasPorSesion = [];
-
-        // Iterar sobre las sesiones y contar las butacas ocupadas
-        foreach ($sesiones as $sesion) {
-            // Buscar todas las compras asociadas a la sesión específica
-            $compras = Compra::where('sesion_id', $sesion->id)->get();
-
-            // Contador para almacenar el número total de butacas ocupadas
-            $numeroButacasOcupadas = 0;
-
-            // Iterar sobre las compras y contar las butacas ocupadas
-            foreach ($compras as $compra) {
-                $butacasOcupadas = Butaca::where('id', $compra->butaca_id)->where('ocupacion', 'ocupado')->count();
-                $numeroButacasOcupadas += $butacasOcupadas;
+{
+    // Obtener todas las sesiones
+    $sesiones = Session::all();
+    
+    // Array para almacenar el número total de butacas ocupadas por sesión
+    $butacasPorSesion = [];
+    
+    // Iterar sobre las sesiones y contar las butacas ocupadas
+    foreach ($sesiones as $sesion) {
+        // Obtener todas las compras asociadas a la sesión específica
+        $compras = Compra::where('sesion_id', $sesion->id)->get();
+    
+        // Contador para almacenar el número total de butacas ocupadas
+        $numeroButacasOcupadas = 0;
+        Log::info($compras);
+        // Iterar sobre las compras de esta sesión y contar las butacas ocupadas
+        foreach ($compras as $compra) {
+            if ($compra->ocupacion === 'ocupado') {
+                $numeroButacasOcupadas++;
+                Log::info($numeroButacasOcupadas);
             }
-
-            // Almacenar el número total de butacas ocupadas por sesión
-            $butacasOcupadasPorSesion[$sesion->id] = $numeroButacasOcupadas;
         }
-
-        return $butacasOcupadasPorSesion;
+        
+        // Almacenar el número total de butacas ocupadas por sesión
+        $butacasPorSesion[$sesion->id] = $numeroButacasOcupadas;
+        Log::info($butacasPorSesion);
     }
+    
+    return $butacasPorSesion;
+}
+
+    
+
 }

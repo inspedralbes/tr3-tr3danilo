@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/obtenerEntradasPorCorreo', [CompraController::class, 'obtenerEntradasPorCorreo']);
 Route::post('/{sessionId}/ocupadas',  [CompraController::class, 'obtenerButacasOcupadas']);
 Route::get('/compras', [CompraController::class, 'mostrarCompra']);
-Route::get('butacasPorSesion', [CompraController::class, 'obtenerButacasPorSesion']);
+Route::get('/butacasPorSesion', [CompraController::class, 'obtenerButacasPorSesion']);
 
 // Rutas de sesiones y películas que no requieren autenticación
 Route::get('/sessions', [SessionController::class, 'mostrarSesion']);

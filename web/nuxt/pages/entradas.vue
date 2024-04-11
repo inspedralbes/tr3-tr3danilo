@@ -8,7 +8,7 @@
       <!-- Iterar sobre cada objeto en el array datosCompra -->
       <div v-for="(compra, index) in datosCompra" :key="'compra-' + index" class="bg-gray-100 rounded-lg p-6 mb-4">
         <h2 class="text-xl font-bold mb-4">
-          Película ID: {{ compra.sesion.pelicula_id }}
+          Película: {{ compra.pelicula }}
         </h2>
 
         <!-- Iterar sobre cada butaca en la propiedad butacas de cada compra -->
