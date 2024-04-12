@@ -5,7 +5,7 @@
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
       >
-        Registre
+      Registrar
       </h2>
     </div>
 
@@ -18,7 +18,7 @@
           </div>
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Correu electrònic</label>
           <div class="mt-2">
             <input v-model="email" id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
           </div>

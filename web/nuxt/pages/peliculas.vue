@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-semibold text-center mb-8">CARTELERA</h1>
+    <h1 class="text-3xl font-semibold text-center mb-8">CARTELLERA</h1>
     <div class="flex flex-wrap justify-center gap-8">
       <div v-for="movie in movies" :key="movie.id" class="bg-white shadow-md hover:shadow-lg transition duration-300 ease-in-out rounded-lg overflow-hidden" style="max-width: 300px;">
         <div class="overflow-hidden h-99">

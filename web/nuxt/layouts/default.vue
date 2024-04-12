@@ -24,20 +24,20 @@
       <!-- Elementos del menú principal -->
       <nav class="hidden lg:flex lg:gap-x-12">
         <ul class="flex space-x-4">
-          <li><nuxt-link to="/">Inicio</nuxt-link></li>
-          <li><nuxt-link to="/peliculas">Cartelera</nuxt-link></li>
-          <li><nuxt-link to="/sesiones">Sesión del Día</nuxt-link></li>
-          <li><nuxt-link to="/entradas">Entradas</nuxt-link></li>
+          <li><nuxt-link to="/">Inici</nuxt-link></li>
+          <li><nuxt-link to="/peliculas">Cartellera</nuxt-link></li>
+          <li><nuxt-link to="/sesiones">Sessions del dia</nuxt-link></li>
+          <li><nuxt-link to="/entradas">Entrades</nuxt-link></li>
         </ul>
       </nav>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-    <a v-if="store.isAuthenticated" @click="logout" class="text-sm font-semibold leading-6 text-gray-900"
-      >Logout <span aria-hidden="true">&rarr;</span></a
-    >
-    <a v-else href="/Login" class="text-sm font-semibold leading-6 text-gray-900"
-      >Log in <span aria-hidden="true">&rarr;</span></a
-    >
-  </div>
+        <a v-if="store.isAuthenticated" @click="logoutAndReload" class="text-sm font-semibold leading-6 text-gray-900"
+          >Logout <span aria-hidden="true">&rarr;</span></a
+        >
+        <a v-else href="/Login" class="text-sm font-semibold leading-6 text-gray-900"
+          >Log in <span aria-hidden="true">&rarr;</span></a
+        >
+      </div>
     </nav>
     <!-- Menú desplegable para dispositivos móviles -->
     <Dialog
@@ -69,7 +69,7 @@
           </button>
         </div>
         <div class="py-6">
-          <a v-if="store.isAuthenticated" @click="logout">Logout</a>
+          <a v-if="store.isAuthenticated" @click="logoutAndReload">Logout</a>
           <nuxt-link to="/login">Login</nuxt-link>
         </div>
       </DialogPanel>
@@ -84,7 +84,9 @@ import { compraStore } from "../stores/compra.js";
 
 const mobileMenuOpen = ref(false);
 const store = compraStore();
-function logout() {
+
+function logoutAndReload() {
   store.isAuthenticated = false;
+  window.location.reload(); // Reload the page after logout
 }
 </script>

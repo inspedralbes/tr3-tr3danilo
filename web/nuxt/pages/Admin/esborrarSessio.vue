@@ -16,15 +16,19 @@
             <p class="text-gray-700 mt-2">
               {{ session.sesion.fecha }} - {{ session.sesion.hora }}
             </p>
-            <button @click="borrarSession(session.sesion.id)" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Borrar Sesión</button>
+            <button @click="borrarSession(session.sesion.id, session)" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Esborrar Sessió</button>
           </div>
+          
         </div>
+        
       </div>
+      <div class="mt-4 flex justify-center">
+        <nuxt-link to="/Admin/panelAdmin" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tornar</nuxt-link>
+    </div>
     </div>
   </template>
   
   <script>
-  import { compraStore } from "../stores/compra.js";
   
   export default {
     data() {
@@ -49,7 +53,7 @@
         });
     },
     methods: {
-      borrarSession(sessionId) {
+      borrarSession(sessionId, session) {
         fetch(`http://localhost:8000/api/esborrarSessio/${sessionId}`, {
           method: 'DELETE',
         })
@@ -57,12 +61,14 @@
           if (!response.ok) {
             throw new Error('Error al borrar sesión');
           }
+          this.sessions = this.sessions.filter(s => s.sesion.id !== session.sesion.id);
           return response.json();
         })
         .then(data => {
           console.log(data.message); // o realiza cualquier acción necesaria
           // También podrías actualizar la lista de sesiones después de borrar una
           // Puedes hacerlo llamando a la API de nuevo o eliminando la sesión localmente
+          
         })
         .catch(error => {
           console.error('Error al borrar sesión:', error);

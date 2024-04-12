@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-lg font-semibold mb-4">Selecciona tus butacas</h2>
+    <h2 class="text-lg font-semibold mb-4">Selecciona les teves butaques</h2>
     <div class="screen"></div> <!-- Línea simulando la pantalla -->
     <div class="grid grid-cols-10 gap-1 justify-center max-w-4xl mx-auto">
       <img v-for="seat in availableSeats" :key="seat.id" :src="getSeatImage(seat)" @click="toggleSeatStatus(seat)"
@@ -8,10 +8,10 @@
     </div>
     <h1 class="screen-title">PANTALLA</h1>
     <div class="screen"></div> <!-- Línea simulando la pantalla -->
-    <p>Total de butacas seleccionadas: {{ totalSelectedSeats }}</p>
+    <p>Total de butaques seleccionades: {{ totalSelectedSeats }}</p>
     <p>Total a pagar: {{ totalPrice }}€</p>
     <div v-if="selectedSeats.length">
-      <p>Butacas seleccionadas:</p>
+      <p>Butaques seleccionades:</p>
       <ul>
         <li v-for="(seat, index) in selectedSeats" :key="index">
           Fila {{ seat.row }} Columna {{ seat.column }}

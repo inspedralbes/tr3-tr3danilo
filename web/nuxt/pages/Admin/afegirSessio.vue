@@ -1,12 +1,12 @@
 <template>
     <div class="max-w-md mx-auto mt-8 p-4 bg-white rounded shadow-md">
-        <h1 class="text-2xl font-bold mb-4">Seleccion de Pelicula</h1>
+        <h1 class="text-2xl font-bold mb-4">Selecció de Pelicula</h1>
         <select v-model="selectedPelicula" class="w-full border rounded py-2 px-3 mb-4 text-gray-700">
-            <option value="">Selecciona una película</option>
+            <option value="">Seleccioneu una pel·lícula</option>
             <option v-for="pelicula in pelicules" :key="pelicula.id" :value="pelicula.id">{{ pelicula.títol }}</option>
         </select>
 
-        <h1 class="text-2xl font-bold mb-2">Fecha</h1>
+        <h1 class="text-2xl font-bold mb-2">Data</h1>
         <input type="date" v-model="selectedDate" class="w-full border rounded py-2 px-3 mb-4 text-gray-700">
 
         <h1 class="text-2xl font-bold mb-2">Hora</h1>
@@ -16,7 +16,7 @@
             class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
     </div>
     <div class="mt-4 flex justify-center">
-        <nuxt-link to="/Admin/panelAdmin" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Volver</nuxt-link>
+        <nuxt-link to="/Admin/panelAdmin" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tornar</nuxt-link>
     </div>
 </template>
 

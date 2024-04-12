@@ -13,7 +13,7 @@
       <div class="space-y-6">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-            >Email address</label
+            >Correu electrònic</label
           >
           <div class="mt-2">
             <input
@@ -33,7 +33,7 @@
             <label
               for="password"
               class="block text-sm font-medium leading-6 text-gray-900"
-              >Password</label
+              >Contrasenya</label
             >
           </div>
           <div class="mt-2">

@@ -2,7 +2,7 @@
   <div class="flex justify-center h-screen">
     <div>
       <div v-if="datosCompra" class="mb-8">
-        <h1 class="text-3xl font-semibold mb-2">Detalles de la compra</h1>
+        <h1 class="text-3xl font-semibold mb-2">Detalls de la compra</h1>
         <!-- Reducido el margen inferior -->
 
         <div class="bg-gray-100 rounded-lg p-6">
@@ -19,7 +19,7 @@
           <ul>
             <li v-for="(seat, index) in datosCompra.butacas" :key="index" class="mb-2">
               <span class="font-semibold">Fila:</span> {{ seat.row }} Butaca: {{ seat.column }} -
-              <span class="font-semibold">Precio:</span> {{ seat.precio }}€
+              <span class="font-semibold">Preu:</span> {{ seat.precio }}€
             </li>
           </ul>
 
@@ -32,13 +32,13 @@
 
            <!-- Agregar timer con animación de carga -->
            <div v-if="!compraRealizada" class="mt-4">
-            <p class="text-gray-500">Realizando compra...</p>
+            <p class="text-gray-500">Realitzant compra...</p>
             <div class="loader"></div> <!-- Aquí iría la animación de carga -->
           </div>
 
           <!-- Mostrar mensaje de compra realizada -->
           <div v-if="compraRealizada" class="mt-4">
-            <p class="text-green-500">Compra realizada correctamente.</p>
+            <p class="text-green-500">Compra feta correctament.</p>
           </div>
 
           <button
@@ -46,7 +46,7 @@
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block"
             :disabled="compraRealizada"
           >
-            Enviar Correo
+          Enviar Correu
           </button>
         </div>
       </div>
@@ -61,25 +61,25 @@
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white w-96 rounded-lg p-8 relative">
           
-          <h2 class="text-xl font-bold mb-4">Nombre</h2>
+          <h2 class="text-xl font-bold mb-4">Nom</h2>
           <input
             v-model="datosUsuario.nombre"
             type="email"
-            placeholder="Nombre"
+            placeholder="Pantera"
             class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
           />
-          <h2 class="text-xl font-bold mb-4">Apellido</h2>
+          <h2 class="text-xl font-bold mb-4">Cognom</h2>
           <input
             v-model="datosUsuario.apellido"
             type="email"
-            placeholder="Apellido"
+            placeholder="Giovanni"
             class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
           />
-          <h2 class="text-xl font-bold mb-4">Enviar Correo Electrónico</h2>
+          <h2 class="text-xl font-bold mb-4">Correu Electrònic</h2>
           <input
             v-model="datosUsuario.correoElectronico"
             type="email"
-            placeholder="Correo Electrónico"
+            placeholder="canelita@gmail.com"
             class="border border-gray-300 px-3 py-2 rounded mb-4 w-full"
           />
           <button
@@ -203,7 +203,7 @@ export default {
         .then((response) => response.json())
         .then((result) => {
           console.log("Compra realizada:", result);
-
+          
         })
         .catch((error) => {
           // Handle any errors that occurred during the fetch request
@@ -227,12 +227,15 @@ export default {
         // Aquí podrías agregar lógica adicional si es necesario, como cerrar el modal
         this.cerrarModal();
         this.compraRealizada = true;
+        
     })
     .catch(error => {
         console.error('Error al guardar los datos de compra:', error);
     });
-
-      this.cerrarModal();
+    this.cerrarModal();
+    setTimeout(() => {
+        this.$router.push({ path: "/compra" });
+    }, 3000);
     },
   },
 };

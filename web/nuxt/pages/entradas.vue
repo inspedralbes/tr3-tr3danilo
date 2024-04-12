@@ -33,10 +33,10 @@
       <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <!-- Contenido del modal para ingresar el correo electrónico -->
         <div class="bg-white p-6 rounded-lg shadow-lg">
-          <input type="email" v-model="email" placeholder="Introduce tu correo electrónico"
+          <input type="email" v-model="email" placeholder="Correu electrònic"
             class="block w-full mb-4 px-3 py-2 border rounded-md">
           <button @click="obtenerEntradasPorCorreo"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enviar</button>
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Consulta</button>
         </div>
       </div>
     </div>
@@ -44,16 +44,44 @@
 </template>
 
 <script>
+import { compraStore } from "../stores/compra.js";
 export default {
   data() {
     return {
       datosCompra: null, // Array para almacenar las entradas del usuario
-      showModal: true, // Variable para controlar la visibilidad del modal
+      showModal: false, // Variable para controlar la visibilidad del modal
       email: '', // Variable para almacenar el correo electrónico introducido por el usuario
       error: '', // Variable para manejar errores de la solicitud
     };
   },
+  mounted() {
+    const store = compraStore();
+    if (store.isAuthenticated) {
+      this.obtenerEntradasPorUsuario();
+    } else {
+      this.showModal = true;
+    }
+  },
   methods: {
+    async obtenerEntradasPorUsuario() {
+      const store = compraStore();
+      const userId = store.idUser; // Obtener el ID del usuario desde el store
+
+      try {
+        const response = await fetch(`http://localhost:8000/api/entradas/${userId}`);
+
+        if (!response.ok) {
+          throw new Error('Error al obtener las entradas');
+        }
+
+        const data = await response.json();
+        this.datosCompra = data;
+        this.error = '';
+      } catch (error) {
+        console.error(error);
+        this.error = 'Error al obtener las entradas. Por favor, inténtelo de nuevo más tarde.';
+      }
+    },
     async obtenerEntradasPorCorreo() {
       try {
         const response = await fetch('http://localhost:8000/api/obtenerEntradasPorCorreo', {

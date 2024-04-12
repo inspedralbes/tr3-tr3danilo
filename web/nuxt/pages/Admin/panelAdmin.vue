@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { compraStore } from "../stores/compra.js";
 import Chart from 'chart.js/auto';
 export default {
     data() {
@@ -23,6 +24,12 @@ export default {
         };
     },
     mounted() {
+    const store = compraStore();
+    if (store.isAuthenticated && store.isAdmin) {
+          this.$router.push("/Admin/panelAdmin");
+        } else {
+          this.$router.push("/index");
+        }
         this.fetchSessionsData();
     },
     methods: {
