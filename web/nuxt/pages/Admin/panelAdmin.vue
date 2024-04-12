@@ -1,3 +1,7 @@
+<!-- 
+Ruta de desplegament: https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
     <div class="p-6">
         <h1 class="text-3xl font-bold mb-4">Panel del Administrador</h1>
@@ -18,6 +22,7 @@ import Chart from 'chart.js/auto';
 export default {
     data() {
         return {
+            ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
             sessionsData: [],
             chartData: {}
         };
@@ -34,7 +39,7 @@ export default {
         },
         async fetchSessionsData() {
             try {
-                const response = await fetch("http://localhost:8000/api/butacasPorSesion");
+                const response = await fetch(`${this.ruta}/api/butacasPorSesion`);
                 const data = await response.json();
                 this.processChartData(data);
             } catch (error) {

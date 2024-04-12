@@ -1,3 +1,8 @@
+<!-- 
+Ruta de desplegament: https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
+
 <template>
     <div class="max-w-md mx-auto mt-8 p-4 bg-white rounded shadow-md">
         <h1 class="text-2xl font-bold mb-4">Seleccion de Pelicula</h1>
@@ -24,6 +29,7 @@
 export default {
     data() {
         return {
+            ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
             pelicules: [],
             selectedPelicula: '',
             selectedDate: '',
@@ -35,7 +41,7 @@ export default {
     },
     methods: {
         datosPelicula() {
-            fetch('http://localhost:8000/api/pelicules')
+            fetch(`${this.ruta}/api/pelicules`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error al obtener los datos de la API');
@@ -63,7 +69,7 @@ export default {
                 hora: hora
             };
             console.log('Datos a guardar:', data);
-            fetch('http://localhost:8000/api/afegirSessio', {
+            fetch(`${this.ruta}/api/afegirSessio`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

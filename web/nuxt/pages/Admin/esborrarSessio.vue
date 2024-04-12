@@ -1,3 +1,7 @@
+<!-- 
+Ruta de desplegament: https://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public
+Ruta Local: http://localhost:8000
+-->
 <template>
     <div class="sesiones-list">
       <h1 class="text-2xl font-bold mb-8">SESSIONS DEL DIA</h1>
@@ -29,12 +33,13 @@
   export default {
     data() {
       return {
+        ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
         pelicula: null,
         sessions: [],
       };
     },
     mounted() {
-      fetch("http://localhost:8000/api/sessions")
+      fetch(`${this.ruta}/api/sessions`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Error al obtener los datos de la API");
@@ -50,7 +55,7 @@
     },
     methods: {
       borrarSession(sessionId) {
-        fetch(`http://localhost:8000/api/esborrarSessio/${sessionId}`, {
+        fetch(`${this.ruta}/api/esborrarSessio/${sessionId}`, {
           method: 'DELETE',
         })
         .then(response => {
