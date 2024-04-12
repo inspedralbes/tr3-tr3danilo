@@ -10,7 +10,7 @@ Ruta Local: http://localhost:8000
 
     <!-- Renderiza el menú de butacas seleccionadas -->
     
-    <button @click="efectuarCompra">Comprar</button>
+    <button @click="efectuarCompra" :disabled="!hasSelectedSeats">Comprar</button>
   </div>
 </template>
 
@@ -36,6 +36,9 @@ export default {
     },
     totalPrice() {
       return this.selectedSeats.reduce((total, seat) => total + seat.precio, 0); // Suma el precio de todas las butacas seleccionadas
+    },
+    hasSelectedSeats() {
+      return this.selectedSeats.length > 0; // Retorna true si hay butacas seleccionadas
     },
   },
   created() {
