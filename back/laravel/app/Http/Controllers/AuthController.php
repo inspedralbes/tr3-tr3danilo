@@ -85,4 +85,25 @@ class AuthController extends Controller
 
     return response()->json(['error' => 'Usuario no encontrado'], 404);
     }
+
+    /**
+     * Delete a user.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function borrarUsuario($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+            return response()->json(['message' => 'Usuario eliminado con éxito']);
+        }
+
+        return response()->json(['error' => 'Usuario no encontrado'], 404);
+    }
+
+
+    
 }
