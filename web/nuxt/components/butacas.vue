@@ -128,7 +128,7 @@ export default {
       } else if (seat.row === this.vipRow) {
         // Comprobar si la butaca pertenece a la fila 6
         // Devolver la imagen de la butaca VIP
-        return '/butacaVip.jpg';
+        return '/butacaVip.png';
       } else {
         // Devolver la imagen según el estado de la butaca
         switch (seat.status) {
