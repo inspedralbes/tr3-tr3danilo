@@ -63,8 +63,51 @@ class CompraController extends Controller
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
     }
-
-
+    public function obtenerEntradasPorUsuario($userID)
+    {
+    
+        // Obtener el usuario por su ID
+        $usuario = User::find($userID);
+    
+        if ($usuario) {
+            // Obtener todas las compras asociadas al usuario
+            $compras = Compra::where('id_user', $userID)->get();
+    
+            // Array para almacenar los datos de la sesión y las butacas compradas
+            $sesionYButacas = [];
+    
+            foreach ($compras as $compra) {
+                // Obtener los datos de la sesión asociada a la compra
+                $sesion = Session::find($compra->sesion_id);
+    
+                // Obtener los datos de la película asociada a la sesión
+                $pelicula = Pelicules::find($sesion->pelicula_id);
+    
+                // Obtener el título de la película
+                $titulo = $pelicula->títol;
+                
+                // Obtener los datos de las butacas compradas en esta compra
+                $butacasCompradas = [
+                    'butaca' => $compra->butaca,
+                    'precio' => $compra->precio,
+                ];
+                
+    
+                // Agregar los datos de la sesión y las butacas compradas al array
+                $sesionYButacas[] = [
+                    'sesion' => $sesion,
+                    'pelicula' => $titulo,
+                    'butacas' => [$butacasCompradas],
+                ];
+            }
+    
+            // Devolver los datos en formato JSON
+            return response()->json($sesionYButacas);
+        } else {
+            // No se encontró un usuario con el ID proporcionado
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+    }
     public function guardarCompra(Request $request)
     {
         // Verificar si el usuario está autenticado

@@ -2,7 +2,7 @@
   {
     "id": 1,
     "títol": "Inception",
-    "descripció": "Un lladre que entra en els somnis dels altres per robar secrets del seu subconscient.",
+    "descripció": "Un ladrón que entra en los sueños de los demás para robar secretos de su subconsciente.",
     "director": "Christopher Nolan",
     "any_estrena": 2010,
     "enllaç_imatge": "https://i.pinimg.com/originals/a4/a3/d9/a4a3d901487cb61d972d534741f815f3.jpg"
@@ -10,7 +10,7 @@
   {
     "id": 2,
     "títol": "The Shawshank Redemption",
-    "descripció": "Dos homes empresonats es vinculen al llarg d'una sèrie d'anys, trobant consol i eventual redempció a través d'actes de decència comuna.",
+    "descripció": "Dos hombres encarcelados se vinculan a lo largo de una serie de años, encontrando consuelo y eventual redención a través de actos de decencia común.",
     "director": "Frank Darabont",
     "any_estrena": 1994,
     "enllaç_imatge": "https://m.media-amazon.com/images/I/71VNhykMgNL._AC_UF894,1000_QL80_.jpg"
@@ -18,9 +18,65 @@
   {
     "id": 3,
     "títol": "The Godfather",
-    "descripció": "El patriarca envellit d'una dinastia del crim organitzat transmet el control del seu imperi clandestí al seu fill reticent.",
+    "descripció": "El patriarca envejecido de una dinastía del crimen organizado transmite el control de su imperio clandestino a su hijo reacio.",
     "director": "Francis Ford Coppola",
     "any_estrena": 1972,
-    "enllaç_imatge": "https://i.pinimg.com/736x/24/5a/44/245a44e4d9da3687f77e6202bd6d2995.jpg"
+    "enllaç_imatge": "https://i.pinimg.com/736x/b7/6c/8c/b76c8c1a165c057609773fe5f350344b.jpg"
+  },
+  {
+    "id": 4,
+    "títol": "The Dark Knight",
+    "descripció": "Cuando la amenaza conocida como el Joker emerge de su misterioso pasado, causa caos y anarquía en Gotham.",
+    "director": "Christopher Nolan",
+    "any_estrena": 2008,
+    "enllaç_imatge": "https://es.web.img2.acsta.net/medias/nmedia/18/66/74/01/20350623.jpg"
+  },
+  {
+    "id": 5,
+    "títol": "Forrest Gump",
+    "descripció": "Un hombre con un coeficiente intelectual bajo participa en algunos de los eventos más importantes de la historia de los Estados Unidos.",
+    "director": "Robert Zemeckis",
+    "any_estrena": 1994,
+    "enllaç_imatge": "https://pics.filmaffinity.com/Forrest_Gump-212765827-large.jpg"
+  },
+  {
+    "id": 6,
+    "títol": "Pulp Fiction",
+    "descripció": "Violencia y pasión desenfrenada chocan en esta historia de crimen, redención y venganza.",
+    "director": "Quentin Tarantino",
+    "any_estrena": 1994,
+    "enllaç_imatge": "https://static.posters.cz/image/750/posters/pulp-fiction-cover-i1288.jpg"
+  },
+  {
+    "id": 7,
+    "títol": "The Matrix",
+    "descripció": "Un hacker descubre la verdad detrás de su realidad aparentemente normal y su papel en la lucha contra los opresores.",
+    "director": "The Wachowskis",
+    "any_estrena": 1999,
+    "enllaç_imatge": "https://play-lh.googleusercontent.com/nTwxPFA8iFB3wrPrkMKtL2OL-XGWwuaRgWUdjkr4UvAKxu4ITuQvo5Mhn3CAPNdKrmPHmA"
+  },
+  {
+    "id": 8,
+    "títol": "Schindler's List",
+    "descripció": "La historia real de Oskar Schindler, un empresario alemán que salva la vida de más de mil judíos durante el Holocausto.",
+    "director": "Steven Spielberg",
+    "any_estrena": 1993,
+    "enllaç_imatge": "https://pics.filmaffinity.com/La_lista_de_Schindler-473662617-large.jpg"
+  },
+  {
+    "id": 9,
+    "títol": "The Lord of the Rings: The Fellowship of the Ring",
+    "descripció": "Un joven hobbit, Frodo Bolsón, emprende un viaje épico para destruir un poderoso anillo y salvar a su tierra de la oscuridad.",
+    "director": "Peter Jackson",
+    "any_estrena": 2001,
+    "enllaç_imatge": "https://m.media-amazon.com/images/I/614zRxS6pnL._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    "id": 10,
+    "títol": "Interestelar",
+    "descripció": "Un grupo de exploradores se embarca en un viaje interestelar en busca de un nuevo hogar para la humanidad, en medio de agujeros de gusano y mundos desconocidos.",
+    "director": "Christopher Nolan",
+    "any_estrena": 2014,
+    "enllaç_imatge": "https://es.web.img3.acsta.net/pictures/14/10/02/11/07/341344.jpg"
   }
 ]

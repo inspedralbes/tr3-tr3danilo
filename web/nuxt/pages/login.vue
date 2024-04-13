@@ -17,7 +17,7 @@ Ruta Local: http://localhost:8000
       <div class="space-y-6">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-            >Email address</label
+            >Correu electrònic</label
           >
           <div class="mt-2">
             <input
@@ -37,7 +37,7 @@ Ruta Local: http://localhost:8000
             <label
               for="password"
               class="block text-sm font-medium leading-6 text-gray-900"
-              >Password</label
+              >Contrasenya</label
             >
           </div>
           <div class="mt-2">
@@ -110,15 +110,15 @@ export default {
         const store = compraStore();
         if (data.role == "admin") {
           store.isAdmin = true;
-        }else{
+        } else {
           store.isAdmin = false;
-          console.log("No eres administrador");
+          //console.log("No eres administrador");
         }
         store.idUser = data.user_id;
         store.isAuthenticated = true;
-        console.log("ID del usuario PINIA:", store.idUser);
+        //console.log("ID del usuario PINIA:", store.idUser);
         // Redirige al usuario a la página de inicio, por ejemplo
-        console.log("Login USUARIO correcto");
+        //console.log("Login USUARIO correcto");
         if (store.isAdmin) {
           this.$router.push("/Admin/panelAdmin");
         } else {

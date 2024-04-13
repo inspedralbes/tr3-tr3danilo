@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/obtenerEntradasPorCorreo', [CompraController::class, 'obtenerEntradasPorCorreo']);
+Route::get('/entradas/{id_usuario}', [CompraController::class, 'obtenerEntradasPorUsuario']);
 Route::post('/{sessionId}/ocupadas',  [CompraController::class, 'obtenerButacasOcupadas']);
 Route::get('/compras', [CompraController::class, 'mostrarCompra']);
 Route::get('/butacasPorSesion', [CompraController::class, 'obtenerButacasPorSesion']);
