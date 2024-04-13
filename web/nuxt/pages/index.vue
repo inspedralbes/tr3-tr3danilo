@@ -44,7 +44,7 @@ export default {
   mounted() {
     const store = compraStore();
     this.isAdmin = store.isAdmin;
-    console.log("Index el user es:", this.isAdmin);
+    //console.log("Index el user es:", this.isAdmin);
   },
 };
 </script>

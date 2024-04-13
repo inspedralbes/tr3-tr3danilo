@@ -119,10 +119,10 @@ export default {
         }
 
         const data = await response.json();
-        console.log("Datos de las entradas:", data);
+        //console.log("Datos de las entradas:", data);
         // Actualizar las entradas en el componente con los datos obtenidos del servidor
         this.datosCompra = data;
-        console.log("Datos de la compra:", this.datosCompra);
+        //console.log("Datos de la compra:", this.datosCompra);
 
         // Reiniciar el correo electrónico después de una solicitud exitosa
         this.email = "";

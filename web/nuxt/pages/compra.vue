@@ -56,7 +56,7 @@ export default {
       let storeSesion = compraStore();
       storeSesion.butacas = this.selectedSeats;
       let sessioId = storeSesion.sessio.id;
-      console.log("Butacas seleccionadas:", this.selectedSeats);
+      //console.log("Butacas seleccionadas:", this.selectedSeats);
       const data = {
         seats: this.selectedSeats.map((seat) => ({
           row: seat.row, // Agregar la fila de la butaca seleccionada
@@ -66,7 +66,7 @@ export default {
         })),
         sessionId: sessioId,
       };
-      console.log("Datos de la compra:", data);
+      //console.log("Datos de la compra:", data);
       this.$router.push({ path: "/ticket" });
     },
     handleSeatSelected(seat) {
@@ -86,7 +86,7 @@ export default {
     },
     handleSelectedSeatsUpdated(data) {
       // Manejar los datos recibidos del evento 'selectedSeatsUpdated'
-      console.log("Datos actualizados de las butacas seleccionadas:", data);
+      //console.log("Datos actualizados de las butacas seleccionadas:", data);
       // Actualizar las butacas seleccionadas en el componente Compra
       this.selectedSeats = data.seats;
     },

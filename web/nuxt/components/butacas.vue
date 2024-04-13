@@ -129,7 +129,7 @@ export default {
         column: seat.column,
         precio: seat.row === this.vipRow ? this.vipPrice : this.normalPrice,
       }));
-      console.log("Butacas seleccionadas PaginaButacas:", selectedSeatsData);
+      //console.log("Butacas seleccionadas PaginaButacas:", selectedSeatsData);
       this.$emit("selectedSeatsUpdated", {
         sessionId: this.sessionId,
         seats: selectedSeatsData,

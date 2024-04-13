@@ -135,9 +135,9 @@ export default {
   mounted() {
     let storeSesion = compraStore();
     let ticket = storeSesion.sessio;
-    console.log("Datos del ticketPinia:", ticket);
-    console.log("Datos de las butacas:", storeSesion.butacas);
-    console.log("ID de la sesión:", ticket.id);
+    //console.log("Datos del ticketPinia:", ticket);
+    //console.log("Datos de las butacas:", storeSesion.butacas);
+    //console.log("ID de la sesión:", ticket.id);
     fetch(`http://localhost:8000/api/sessions/${ticket.id}`, {
       method: "POST",
       headers: {
@@ -151,7 +151,7 @@ export default {
         return response.json();
       })
       .then((data) => {
-        console.log("Datos de la compra:", data.session);
+        //console.log("Datos de la compra:", data.session);
         if (data && data.session) {
           this.datosCompra = {
             butacas: storeSesion.butacas,
@@ -160,7 +160,7 @@ export default {
         } else {
           throw new Error("La respuesta de la API no tiene el formato esperado");
         }
-        console.log("Datos de la compra OFICIAL:", this.datosCompra);
+        //console.log("Datos de la compra OFICIAL:", this.datosCompra);
       })
       .catch((error) => {
         console.error("Error al obtener datos de la API:", error);
@@ -178,7 +178,7 @@ export default {
     ConfirmarCompra() {
       let storeSesion = compraStore();
       let idUsuario = storeSesion.idUser;
-      console.log("ID del usuario COMPRA:", idUsuario);
+      //console.log("ID del usuario COMPRA:", idUsuario);
       const datosUsuario = {
         nombre: this.datosUsuario.nombre,
         apellido: this.datosUsuario.apellido,
@@ -192,8 +192,8 @@ export default {
         sessionId: this.datosCompra.datosSesion.sesion.id,
         id_user: idUsuario,
       };
-      console.log("Datos de la compra LARAVEL:", data);
-      console.log("Datos Usuario LARAVEL:", datosUsuario);
+      //console.log("Datos de la compra LARAVEL:", data);
+      //console.log("Datos Usuario LARAVEL:", datosUsuario);
 
       const token = localStorage.getItem("token");
 
@@ -207,7 +207,7 @@ export default {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log("Compra realizada:", result);
+          //console.log("Compra realizada:", result);
           this.compraRealizada = true;
         })
         .catch((error) => {
@@ -227,7 +227,7 @@ export default {
           if (!response.ok) {
             throw new Error("Error al guardar los datos de compra");
           }
-          console.log("Datos de compra guardados correctamente");
+          //console.log("Datos de compra guardados correctamente");
           // Aquí podrías agregar lógica adicional si es necesario, como cerrar el modal
           this.cerrarModal();
         })

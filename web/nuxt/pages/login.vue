@@ -106,15 +106,15 @@ export default {
         const store = compraStore();
         if (data.role == "admin") {
           store.isAdmin = true;
-        }else{
+        } else {
           store.isAdmin = false;
-          console.log("No eres administrador");
+          //console.log("No eres administrador");
         }
         store.idUser = data.user_id;
         store.isAuthenticated = true;
-        console.log("ID del usuario PINIA:", store.idUser);
+        //console.log("ID del usuario PINIA:", store.idUser);
         // Redirige al usuario a la página de inicio, por ejemplo
-        console.log("Login USUARIO correcto");
+        //console.log("Login USUARIO correcto");
         if (store.isAdmin) {
           this.$router.push("/Admin/panelAdmin");
         } else {
