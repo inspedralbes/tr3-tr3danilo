@@ -90,7 +90,7 @@ export default {
       const userId = store.idUser; // Obtener el ID del usuario desde el store
 
       try {
-        const response = await fetch(`http://localhost:8000/api/entradas/${userId}`);
+        const response = await fetch(`${this.ruta}/api/entradas/${userId}`);
 
         if (!response.ok) {
           throw new Error("Error al obtener las entradas");

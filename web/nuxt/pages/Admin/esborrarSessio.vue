@@ -47,11 +47,10 @@ Ruta Local: http://localhost:8000
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      ruta: 'http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public',
+      ruta: "http://tr3cine.a17danvicfer.daw.inspedralbes.cat/laravel/public",
       pelicula: null,
       sessions: [],
     };
@@ -73,28 +72,25 @@ export default {
   },
   methods: {
     borrarSession(sessionId, session) {
-      fetch(`http://localhost:8000/api/esborrarSessio/${sessionId}`, {
-    borrarSession(sessionId) {
       fetch(`${this.ruta}/api/esborrarSessio/${sessionId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al borrar sesión');
-        }
-        this.sessions = this.sessions.filter(s => s.sesion.id !== session.sesion.id);
-        return response.json();
-      })
-      .then(data => {
-        console.log(data.message); // o realiza cualquier acción necesaria
-        // También podrías actualizar la lista de sesiones después de borrar una
-        // Puedes hacerlo llamando a la API de nuevo o eliminando la sesión localmente
-
-      })
-      .catch(error => {
-        console.error('Error al borrar sesión:', error);
-      });
-    }
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al borrar sesión");
+          }
+          this.sessions = this.sessions.filter((s) => s.sesion.id !== session.sesion.id);
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data.message); // o realiza cualquier acción necesaria
+          // También podrías actualizar la lista de sesiones después de borrar una
+          // Puedes hacerlo llamando a la API de nuevo o eliminando la sesión localmente
+        })
+        .catch((error) => {
+          console.error("Error al borrar sesión:", error);
+        });
+    },
   },
 };
 </script>

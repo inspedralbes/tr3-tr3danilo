@@ -102,7 +102,7 @@ export default {
       this.emitSelectedSeats();
     },
     obtenerButacasOcupadas() {
-      console.log("SessioId: Butacas:", this.sessioPinia);
+      //console.log("SessioId: Butacas:", this.sessioPinia);
       fetch(`${this.ruta}/api/${this.sessioPinia}/ocupadas`, {
         method: "POST",
         headers: {
