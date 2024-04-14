@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { io } from "socket.io-client";
 import { compraStore } from "../stores/compra.js";
 
 export default {
@@ -68,7 +69,44 @@ export default {
       vipRow: 6,
       vipPrice: 8,
       normalPrice: 6,
+      socket: null,
     };
+  },
+  mounted() {
+    let storeSesion = compraStore();
+    //console.log("Sesion", storeSesion.sessio.id);
+    this.socket = io("http://localhost:5000"); // Conecta con tu servidor Socket.IO
+    if (storeSesion.sessio.id) {
+      this.socket.emit("joinSession", storeSesion.sessio.id);
+    }
+    this.socket.on("userJoined", (userId) => {
+      //console.log("Nuevo usuario conectado:", userId);
+    });
+
+    if (this.socket) {
+      this.socket.on("seatSelected", (seat) => {
+        //console.log(`Butaca seleccionada: ${JSON.stringify(seat)}`);
+        const index = this.availableSeats.findIndex((s) => s.id === seat.id);
+        if (index !== -1) {
+          this.availableSeats[index].status = "selected";
+        }
+      });
+
+      this.socket.on("seatDeselected", (seat) => {
+        //console.log(`Butaca deseleccionada: ${JSON.stringify(seat)}`);
+        const index = this.availableSeats.findIndex((s) => s.id === seat.id);
+        if (index !== -1) {
+          this.availableSeats[index].status = "available";
+        }
+      });
+    } else {
+      console.log("No hay socket");
+    }
+  },
+  beforeDestroy() {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
   },
   computed: {
     totalSelectedSeats() {
@@ -87,12 +125,14 @@ export default {
       if (seat.status === "available" || seat.status === "vip") {
         seat.status = "selected";
         this.selectedSeats.push(seat);
+        this.socket.emit("seatSelected", seat);
       } else if (seat.status === "selected") {
         seat.status = "available";
         const index = this.selectedSeats.findIndex((s) => s.id === seat.id);
         if (index !== -1) {
           this.selectedSeats.splice(index, 1);
         }
+        this.socket.emit("seatDeselected", seat);
       }
       this.emitSelectedSeats();
     },

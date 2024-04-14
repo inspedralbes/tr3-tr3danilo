@@ -206,7 +206,7 @@ export default {
         body: JSON.stringify(data),
       })
         .then((response) => response.json())
-        .then((result) => {
+        .then((data) => {
           //console.log("Compra realizada:", result);
           this.compraRealizada = true;
         })
