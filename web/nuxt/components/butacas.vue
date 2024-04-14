@@ -80,7 +80,7 @@ export default {
   mounted() {
     let storeSesion = compraStore();
     //console.log("Sesion", storeSesion.sessio.id);
-    this.socket = io(`http://tr3cine.a17danvicfer.daw.inspedralbes.cat:5000`); // Conecta con tu servidor Socket.IO
+    this.socket = io(`http://tr3cine.a17danvicfer.daw.inspedralbes.cat:3102`); // Conecta con tu servidor Socket.IO
     if (storeSesion.sessio.id) {
       this.socket.emit("joinSession", storeSesion.sessio.id);
     }
