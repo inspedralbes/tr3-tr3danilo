@@ -7,7 +7,6 @@ Ruta Local: http://localhost:8000
   <div class="container">
     <!-- Renderiza el componente de butacas -->
     <Butacas :sessionId="sessionId" @selectedSeatsUpdated="handleSelectedSeatsUpdated" />
-
     <!-- Botón Comprar -->
     <div class="flex justify-center mt-4">
       <!-- Espacio en blanco a la izquierda para centrar el botón -->
